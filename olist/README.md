@@ -6,6 +6,28 @@
 
 Brazilian e-commerce public dataset
 
+## Análise exploratória de atrasos
+
+O projeto inclui uma EDA orientada por hipóteses para identificar, no momento da
+aprovação do pagamento, fatores associados ao risco de entrega após o prazo prometido.
+O código reutilizável está em `module_olist/eda.py` e o roteiro completo, com tabelas,
+gráficos e conclusões, está em `notebooks/02_eda_order_delay.ipynb`.
+
+Para executar a análise, coloque estes arquivos do dataset público da Olist em
+`data/raw/` (a pasta é ignorada pelo Git):
+
+- `olist_orders_dataset.csv`
+- `olist_order_items_dataset.csv`
+- `olist_customers_dataset.csv`
+
+Depois, na raiz do projeto, execute:
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/02_eda_order_delay.ipynb
+uv run pytest
+uv run ruff check
+```
+
 ## Project Organization
 
 ```
