@@ -23,6 +23,7 @@ Para executar a análise, coloque estes arquivos do dataset público da Olist em
 Depois, na raiz do projeto, execute:
 
 ```bash
+uv run python -m module_olist.main
 uv run jupyter nbconvert --to notebook --execute --inplace notebooks/02_eda_order_delay.ipynb
 uv run pytest
 uv run ruff check
