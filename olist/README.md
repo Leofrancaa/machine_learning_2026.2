@@ -29,6 +29,19 @@ uv run pytest
 uv run ruff check
 ```
 
+## SHAP explanations
+
+After training, generate feature attribution plots with:
+
+```bash
+uv run python -m module_olist.explain
+```
+
+The command reads `data/interim/dataset.csv` and `models/model.pkl`, then saves a
+global importance chart, a beeswarm chart, and an individual waterfall chart in
+`reports/figures/`. SHAP values describe the model's raw output, which may use
+log-odds rather than probabilities.
+
 ## Project Organization
 
 ```
