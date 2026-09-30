@@ -1,7 +1,6 @@
 import pandas as pd
 import pytest
 
-import module_olist.main as pipeline
 from module_olist.eda import (
     build_order_analysis,
     deadline_risk,
@@ -10,6 +9,7 @@ from module_olist.eda import (
     state_risk,
     target_summary,
 )
+import module_olist.main as pipeline
 
 
 @pytest.fixture
@@ -113,9 +113,16 @@ def test_main_creates_intermediate_dataset(tmp_path, olist_tables, monkeypatch):
     monkeypatch.setattr(pipeline, "ITEMS_PATH", items_path)
     monkeypatch.setattr(pipeline, "CUSTOMERS_PATH", customers_path)
     monkeypatch.setattr(pipeline, "OUTPUT_PATH", output_path)
+    trained_datasets = []
+    monkeypatch.setattr(
+        pipeline,
+        "train_model",
+        lambda dataset_path: trained_datasets.append(dataset_path),
+    )
 
     pipeline.main()
 
     saved = pd.read_csv(output_path)
     assert saved["order_id"].tolist() == ["o1", "o2"]
     assert {"is_late", "promised_days", "purchase_month"}.issubset(saved.columns)
+    assert trained_datasets == [output_path]

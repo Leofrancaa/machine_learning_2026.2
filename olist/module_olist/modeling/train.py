@@ -8,7 +8,14 @@ from loguru import logger
 import numpy as np
 import pandas as pd
 from sklearn.base import clone
-from sklearn.metrics import f1_score, precision_score, recall_score, roc_auc_score
+from sklearn.metrics import (
+    accuracy_score,
+    average_precision_score,
+    f1_score,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+)
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 from module_olist.config import INTERIM_DATA_DIR, MODELS_DIR
@@ -38,10 +45,12 @@ def _metrics_at_threshold(y_true, y_proba, threshold: float) -> dict[str, float]
     y_pred = (np.asarray(y_proba) >= threshold).astype(int)
     return {
         "threshold": float(threshold),
+        "accuracy": float(accuracy_score(y_true, y_pred)),
         "precision": float(precision_score(y_true, y_pred, zero_division=0)),
         "recall": float(recall_score(y_true, y_pred, zero_division=0)),
         "f1_score": float(f1_score(y_true, y_pred, zero_division=0)),
         "roc_auc": float(roc_auc_score(y_true, y_proba)),
+        "pr_auc": float(average_precision_score(y_true, y_proba)),
     }
 
 
@@ -130,15 +139,17 @@ def evaluate_models(
 def _log_metrics(name: str, metrics: Mapping[str, float], stage: str) -> None:
     """Log a model's metrics consistently."""
     logger.info(
-        "{} [{}] | threshold={:.2f} precision={:.4f} recall={:.4f} "
-        "f1={:.4f} roc_auc={:.4f}",
+        "{} [{}] | threshold={:.2f} accuracy={:.4f} precision={:.4f} "
+        "recall={:.4f} f1={:.4f} roc_auc={:.4f} pr_auc={:.4f}",
         name,
         stage,
         metrics["threshold"],
+        metrics["accuracy"],
         metrics["precision"],
         metrics["recall"],
         metrics["f1_score"],
         metrics["roc_auc"],
+        metrics["pr_auc"],
     )
 
 
