@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deep-learning-course"
+version = "0.1.0"
+description = "Deep learning exercises and notebooks"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "ipykernel>=6,<7",
+    "jupyterlab>=4,<5",
+    "matplotlib>=3.8,<4",
+    "numpy>=1.26,<3",
+    "tensorflow>=2.21,<2.22",
+]
+
+[project.optional-dependencies]
+dev = ["tox>=4,<5"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
