@@ -1,12 +1,10 @@
 """Modeling pipelines for delivery-delay classification."""
 
-from lightgbm import LGBMClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from xgboost import XGBClassifier
 
 NUMERIC_FEATURES = [
     "promised_days",
@@ -48,6 +46,8 @@ def create_preprocessor() -> ColumnTransformer:
 
 def create_xgboost_pipeline() -> Pipeline:
     """Create an XGBoost classification pipeline."""
+    from xgboost import XGBClassifier
+
     return Pipeline(
         steps=[
             ("preprocessor", create_preprocessor()),
@@ -65,6 +65,8 @@ def create_xgboost_pipeline() -> Pipeline:
 
 def create_lightgbm_pipeline() -> Pipeline:
     """Create a LightGBM classification pipeline."""
+    from lightgbm import LGBMClassifier
+
     return Pipeline(
         steps=[
             ("preprocessor", create_preprocessor()),

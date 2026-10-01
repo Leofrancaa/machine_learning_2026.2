@@ -1,9 +1,11 @@
 """Cross-validated training for delivery-delay classifiers."""
 
 from collections.abc import Mapping
+import json
 from pathlib import Path
 import pickle
 
+import joblib
 from loguru import logger
 import numpy as np
 import pandas as pd
@@ -19,6 +21,7 @@ from sklearn.metrics import (
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 from module_olist.config import INTERIM_DATA_DIR, MODELS_DIR
+from module_olist.modeling.evaluate import evaluate_model
 from module_olist.modeling.pipeline import (
     create_gradient_boosting_pipeline,
     create_lightgbm_pipeline,
@@ -28,6 +31,8 @@ from module_olist.modeling.split import FEATURES, split_data
 
 DATASET_PATH = INTERIM_DATA_DIR / "dataset.csv"
 MODEL_PATH = MODELS_DIR / "model.pkl"
+SELECTED_MODEL_PATH = MODELS_DIR / "best_model.joblib"
+METADATA_PATH = MODELS_DIR / "metadata.json"
 THRESHOLDS = np.round(np.arange(0.05, 0.96, 0.01), 2)
 
 
@@ -129,8 +134,7 @@ def evaluate_models(
             raise ValueError(f"Missing cross-validation results for model: {name}")
 
         threshold = float(cv_results[name]["threshold"])
-        y_proba = model.predict_proba(X_test)[:, 1]
-        results[name] = _metrics_at_threshold(y_test, y_proba, threshold)
+        results[name] = evaluate_model(model, name, X_test, y_test, threshold)
         _log_metrics(name, results[name], stage="test")
 
     return results
@@ -175,6 +179,28 @@ def save_model_artifact(
     logger.success("Model artifact saved to {}", model_path)
 
 
+def save_selected_model(
+    model_path: Path,
+    metadata_path: Path,
+    model_name: str,
+    model: object,
+    threshold: float,
+) -> None:
+    """Save the selected pipeline and inference metadata as separate files."""
+    model_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(model, model_path)
+    metadata = {
+        "model_name": model_name,
+        "threshold": float(threshold),
+        "selection_metric": "f1_oof",
+        "threshold_metric": "f1",
+        "features": FEATURES,
+    }
+    metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    logger.success("Selected model and metadata saved to {} and {}", model_path, metadata_path)
+
+
 def main(
     dataset_path: Path = DATASET_PATH,
     model_path: Path = MODEL_PATH,
@@ -184,6 +210,8 @@ def main(
     logger.info("Loading modeling dataset from {}...", dataset_path)
     data = pd.read_csv(dataset_path)
     X_train, X_test, y_train, y_test = split_data(data)
+    test_features_path = dataset_path.parent / "X_test.csv"
+    X_test.to_csv(test_features_path, index=False)
 
     logger.info(
         "Training rows: {:,} | test rows: {:,} | positive rate: {:.2%}",
@@ -197,7 +225,7 @@ def main(
     best_name = max(cv_results, key=lambda name: cv_results[name]["f1_score"])
     logger.info("Best candidate selected from CV: {}", best_name)
 
-    fitted_models = fit_models(X_train, y_train, candidates)
+    fitted_models = fit_models(X_train, y_train, {best_name: candidates[best_name]})
     test_results = evaluate_models(X_test, y_test, fitted_models, cv_results)
     save_model_artifact(
         model_path,
@@ -205,6 +233,13 @@ def main(
         fitted_models[best_name],
         cv_results[best_name],
         test_results[best_name],
+    )
+    save_selected_model(
+        SELECTED_MODEL_PATH,
+        METADATA_PATH,
+        best_name,
+        fitted_models[best_name],
+        cv_results[best_name]["threshold"],
     )
     logger.success("Cross-validated training completed.")
 

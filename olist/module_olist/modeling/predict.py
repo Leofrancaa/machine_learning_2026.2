@@ -1,9 +1,11 @@
 """Prediction utilities for the trained delivery-delay classifier."""
 
 from collections.abc import Mapping
+import json
 from pathlib import Path
 import pickle
 
+import joblib
 from loguru import logger
 import numpy as np
 import pandas as pd
@@ -50,6 +52,18 @@ def load_model_artifact(model_path: Path = MODEL_PATH) -> dict:
     return artifact
 
 
+def load_model(model_path: Path, metadata_path: Path) -> tuple[object, str, float]:
+    """Load the selected model and its inference metadata."""
+    if not model_path.is_file() or not metadata_path.is_file():
+        raise FileNotFoundError("Selected model or metadata is missing. Run training first.")
+    model = joblib.load(model_path)
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    threshold = float(metadata["threshold"])
+    if not 0.0 <= threshold <= 1.0:
+        raise ValueError("The stored threshold must be between 0 and 1.")
+    return model, metadata["model_name"], threshold
+
+
 def predict(features: pd.DataFrame, artifact: Mapping) -> pd.DataFrame:
     """Predict delay probabilities and classes using the trained threshold."""
     required_features = list(artifact["features"])
@@ -65,6 +79,18 @@ def predict(features: pd.DataFrame, artifact: Mapping) -> pd.DataFrame:
         {
             "late_probability": np.asarray(probabilities, dtype=float),
             "predicted_is_late": (probabilities >= threshold).astype("int8"),
+        },
+        index=features.index,
+    )
+
+
+def predict_with_threshold(model, features: pd.DataFrame, threshold: float) -> pd.DataFrame:
+    """Predict probabilities and classes from a selected model pipeline."""
+    probabilities = model.predict_proba(features)[:, 1]
+    return pd.DataFrame(
+        {
+            "prob_is_late": np.asarray(probabilities, dtype=float),
+            "prediction": (probabilities >= threshold).astype("int8"),
         },
         index=features.index,
     )

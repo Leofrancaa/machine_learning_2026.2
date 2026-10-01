@@ -1522,6 +1522,7 @@ dependencies = [
     { name = "fg-data-profiling" },
     { name = "ipython", version = "8.39.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "ipython", version = "9.16.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "joblib" },
     { name = "jupyterlab" },
     { name = "lightgbm" },
     { name = "loguru" },
@@ -1550,6 +1551,7 @@ dependencies = [
 requires-dist = [
     { name = "fg-data-profiling", specifier = ">=4.19.1" },
     { name = "ipython" },
+    { name = "joblib" },
     { name = "jupyterlab" },
     { name = "lightgbm", specifier = ">=4.7.0" },
     { name = "loguru" },

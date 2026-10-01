@@ -5,7 +5,13 @@ import numpy as np
 import pandas as pd
 
 from module_olist.inference import run_preview
-from module_olist.modeling.predict import load_model_artifact, predict
+from module_olist.modeling.predict import (
+    load_model,
+    load_model_artifact,
+    predict,
+    predict_with_threshold,
+)
+from module_olist.modeling.train import save_selected_model
 
 
 class ProbabilityModel:
@@ -36,6 +42,22 @@ def test_predict_uses_threshold_stored_in_artifact(tmp_path):
 
     assert result["late_probability"].tolist() == [0.2, 0.6, 0.9]
     assert result["predicted_is_late"].tolist() == [0, 1, 1]
+
+
+def test_selected_model_and_metadata_support_inference(tmp_path):
+    model_path = tmp_path / "best_model.joblib"
+    metadata_path = tmp_path / "metadata.json"
+    save_selected_model(
+        model_path, metadata_path, "test_model", ProbabilityModel(), 0.6
+    )
+
+    model, model_name, threshold = load_model(model_path, metadata_path)
+    predictions = predict_with_threshold(
+        model, pd.DataFrame({"score": [0.2, 0.6, 0.9]}), threshold
+    )
+
+    assert model_name == "test_model"
+    assert predictions["prediction"].tolist() == [0, 1, 1]
 
 
 def test_inference_preview_is_short_and_includes_actual_target(tmp_path):
