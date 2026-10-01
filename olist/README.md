@@ -12,6 +12,8 @@ O projeto inclui uma EDA orientada por hipóteses para identificar, no momento d
 aprovação do pagamento, fatores associados ao risco de entrega após o prazo prometido.
 O código reutilizável está em `module_olist/eda.py` e o roteiro completo, com tabelas,
 gráficos e conclusões, está em `notebooks/02_eda_order_delay.ipynb`.
+`notebooks/profiling-orders.ipynb` e `reports/olist_orders_profiling.html` trazem
+o perfil da tabela bruta de pedidos usado na `machine-learning-exs`.
 
 Para executar a análise, coloque estes arquivos do dataset público da Olist em
 `data/raw/` (a pasta é ignorada pelo Git):
@@ -41,6 +43,24 @@ The command reads `data/interim/dataset.csv` and `models/model.pkl`, then saves 
 global importance chart, a beeswarm chart, and an individual waterfall chart in
 `reports/figures/`. SHAP values describe the model's raw output, which may use
 log-odds rather than probabilities.
+
+## Model selection and active learning
+
+Training compares XGBoost, LightGBM, and Gradient Boosting with stratified
+cross-validation, selects a probability threshold using out-of-fold F1, and
+evaluates the selected model on a held-out test set. It saves both the existing
+`models/model.pkl` artifact and `models/best_model.joblib` with
+`models/metadata.json` for separate-model inference.
+
+After preparing the dataset, run the active-learning simulation on the training
+partition with:
+
+```bash
+uv run python -m module_olist.modeling.active_learning
+```
+
+It starts with 10 labeled orders, queries five uncertain orders per round, and
+uses at most 1,000 training orders to keep label spreading manageable.
 
 ## Project Organization
 
