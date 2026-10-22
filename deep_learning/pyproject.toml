@@ -1,24 +1,51 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
-name = "deep-learning-course"
-version = "0.1.0"
-description = "Deep learning exercises and notebooks"
-readme = "README.md"
-requires-python = ">=3.10,<3.14"
-dependencies = [
-    "ipykernel>=6,<7",
-    "jupyterlab>=4,<5",
-    "matplotlib>=3.8,<4",
-    "numpy>=1.26,<3",
-    "tensorflow>=2.21,<2.22",
+name = "module_deep_learning"
+version = "0.0.1"
+description = "Exercícios de deep learning com TensorFlow e Keras"
+authors = [
+  { name = "Leonardo F" },
 ]
 
-[project.optional-dependencies]
-dev = ["tox>=4,<5"]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    
+]
+dependencies = [
+    "ipython",
+    "jupyterlab",
+    "keras>=3.15.1",
+    "loguru",
+    "matplotlib",
+    "mkdocs",
+    "notebook",
+    "numpy",
+    "pandas",
+    "pip",
+    "pydot>=4.0.1",
+    "pytest",
+    "python-dotenv",
+    "ruff",
+    "scikit-learn",
+    "tensorflow>=2.21.0",
+    "tqdm",
+    "typer",
+]
+requires-python = "~=3.12.0"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+
+[tool.ruff]
+line-length = 99
+src = ["module_deep_learning"]
+include = ["pyproject.toml", "module_deep_learning/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["module_deep_learning"]
+force-sort-within-sections = true
