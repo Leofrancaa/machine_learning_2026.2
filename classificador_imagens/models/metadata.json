@@ -1,0 +1,22 @@
+{
+    "model_name": "CNN",
+    "class_names": [
+        "avião",
+        "automóvel",
+        "pássaro",
+        "gato",
+        "cervo",
+        "cachorro",
+        "sapo",
+        "cavalo",
+        "navio",
+        "caminhão"
+    ],
+    "input_shape": [
+        32,
+        32,
+        3
+    ],
+    "epochs_trained": 60,
+    "best_val_loss": 0.3826638162136078
+}
