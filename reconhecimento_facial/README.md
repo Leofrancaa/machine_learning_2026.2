@@ -50,6 +50,25 @@ uv run ruff check
     uv run python -m module_reconhecimento.inference
     ```
 
+### Sem webcam: portaria virtual
+
+A portaria virtual faz o cadastro e o teste de acesso pelo navegador, com fotos:
+
+```bash
+uv run python -m module_reconhecimento.portaria
+```
+
+O navegador abre em `http://127.0.0.1:8000` com duas abas:
+
+- **Cadastro**: nome e fotos da pessoa. As fotos com rosto são salvas em
+  `data/raw/authorized/<nome>/` e o banco de rostos é gerado de novo.
+- **Portaria**: envie a foto de quem está chegando. Uma animação em Three.js
+  mostra a pessoa no totem; se o acesso for liberado o portão abre, senão aparece
+  **ACESSO NEGADO**.
+
+A página carrega o Three.js pela internet (jsDelivr). `Ctrl+C` no terminal encerra
+o servidor.
+
 Modelo, detector e threshold ficam em `module_reconhecimento/config.py`. Se uma
 pessoa autorizada for negada, aumente o `THRESHOLD` e gere o banco de novo.
 
@@ -100,6 +119,11 @@ pessoa autorizada for negada, aumente o `THRESHOLD` e gere o banco de novo.
     ├── main.py                 <- Cadastro: gera o banco de rostos autorizados
     │
     ├── inference.py            <- Controle de acesso em tempo real pela webcam
+    │
+    ├── portaria.py             <- Servidor da portaria virtual (cadastro e acesso por foto)
+    │
+    ├── web
+    │   └── portaria.html       <- Página de cadastro e animação 3D da portaria (Three.js)
     │
     ├── modeling
     │   ├── __init__.py
