@@ -6,6 +6,34 @@
 
 Pipeline ponta a ponta de classificação de imagens do CIFAR-10 com CNN
 
+## Resumo
+
+Classifica as 60 mil imagens 32x32 do CIFAR-10 em 10 classes (avião, automóvel, pássaro,
+gato, cervo, cachorro, sapo, cavalo, navio e caminhão) com uma CNN.
+
+- `main.py`: carrega e normaliza os dados, treina a CNN e avalia no teste. Salva o modelo
+  (`models/cnn_model.keras`), os metadados, o histórico por época e as figuras.
+- `inference.py`: carrega o modelo salvo e classifica 9 imagens de teste sorteadas.
+- A CNN tem data augmentation (flip e translação), blocos de convolução com batch
+  normalization e dropout, e treina com early stopping e redução da learning rate.
+
+```bash
+uv run python -m module_classificador_imagens.main
+uv run python -m module_classificador_imagens.inference
+```
+
+## Bibliotecas e tecnologias
+
+| Biblioteca | Uso no projeto |
+| --- | --- |
+| TensorFlow / Keras | Download do CIFAR-10, CNN, callbacks de treino e modelo `.keras` |
+| NumPy | Normalização dos pixels e sorteio das imagens de inferência |
+| pandas | Histórico de treino em CSV e tabela de previsões |
+| Matplotlib | Figuras de exemplos, curvas de treino e previsões |
+| loguru | Logs do pipeline |
+| Jupyter | Notebook com a versão exploratória do classificador |
+| uv, ruff, pytest | Ambiente e dependências, lint e testes |
+
 ## Ambiente
 
 O projeto usa o [uv](https://docs.astral.sh/uv/) para gerenciar o Python (3.12) e as
