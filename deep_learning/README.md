@@ -6,6 +6,28 @@
 
 Exercícios de deep learning com TensorFlow e Keras
 
+## Resumo
+
+Três notebooks que vão do básico de redes neurais até uma CNN:
+
+| Notebook | O que faz |
+| --- | --- |
+| `atividade_tensorflow.ipynb` | Tensores, saída de um neurônio, ReLU, MLP 3-4-1, forward pass, threshold e loss Binary Cross-Entropy com dados de pedidos |
+| `structured_data_classification_from_scratch.ipynb` | Classificação binária de doença cardíaca (303 pacientes) com features numéricas e categóricas, a partir do exemplo oficial do Keras |
+| `classificador_imagens.ipynb` | CNN para as 10 classes do CIFAR-10, com data augmentation, batch normalization, dropout e early stopping (~86% de acurácia no teste) |
+
+## Bibliotecas e tecnologias
+
+| Biblioteca | Uso no projeto |
+| --- | --- |
+| TensorFlow / Keras | Tensores, camadas, treino e avaliação das redes |
+| NumPy | Arrays de entrada e manipulação das imagens |
+| pandas | Leitura do CSV de pacientes e conversão para `tf.data` |
+| Matplotlib | Curvas de acurácia e loss, grade de imagens e previsões |
+| pydot | Desenho da arquitetura com `plot_model` (exige o Graphviz instalado) |
+| Jupyter | Execução dos notebooks |
+| uv, ruff, pytest | Ambiente e dependências, lint e testes |
+
 ## Ambiente
 
 O projeto usa o [uv](https://docs.astral.sh/uv/) para gerenciar o Python (3.12) e as
