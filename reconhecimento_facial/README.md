@@ -6,8 +6,30 @@
 
 Controle de acesso por reconhecimento facial com OpenCV e DeepFace
 
+## Resumo
+
 Cada rosto é comparado com as fotos das pessoas autorizadas. Se a pessoa for
 reconhecida, o acesso é **liberado (verde)**; caso contrário, é **negado (vermelho)**.
+
+1. **Cadastro** (`main.py`): o DeepFace detecta o rosto de cada foto autorizada e gera
+   um embedding de 512 números com o Facenet512. Os embeddings formam o banco de rostos.
+2. **Reconhecimento** (`predict.py`): o rosto novo vira embedding e é comparado com o banco
+   pela distância cosseno. O acesso é liberado se a menor distância for até 0,30.
+3. **Acesso**: pela webcam (`inference.py`) ou, sem webcam, pela portaria virtual no
+   navegador (`portaria.py`).
+
+## Bibliotecas e tecnologias
+
+| Biblioteca | Uso no projeto |
+| --- | --- |
+| DeepFace | Detecção (YuNet), embeddings (Facenet512) e threshold calibrado |
+| TensorFlow / tf-keras | Backend que roda o Facenet512 |
+| OpenCV | Leitura das fotos, webcam e desenho dos bounding boxes |
+| NumPy e pandas | Embeddings e banco de rostos (`face_database.pkl`) |
+| http.server (Python) | Servidor local da portaria, sem dependências extras |
+| Three.js | Animação 3D da portaria no navegador |
+| loguru, tqdm | Logs e barra de progresso do cadastro |
+| uv, ruff, pytest | Ambiente e dependências, lint e testes |
 
 ## Ambiente
 
