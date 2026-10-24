@@ -41,6 +41,7 @@ def test_generate_explanations_saves_global_and_local_plots(monkeypatch, tmp_pat
     shap.plots.bar = draw_plot
     shap.plots.beeswarm = draw_plot
     shap.plots.waterfall = draw_plot
+    shap.summary_plot = draw_plot
     monkeypatch.setitem(sys.modules, "shap", shap)
 
     paths = explain.generate_explanations(
@@ -50,5 +51,5 @@ def test_generate_explanations_saves_global_and_local_plots(monkeypatch, tmp_pat
     )
 
     assert sample_columns == ["price"]
-    assert set(paths) == {"global_bar", "beeswarm", "waterfall"}
+    assert set(paths) == {"global_bar", "beeswarm", "waterfall", "summary"}
     assert all(path.is_file() for path in paths.values())

@@ -48,6 +48,7 @@ def generate_explanations(
         "global_bar": output_dir / "shap_global_bar.png",
         "beeswarm": output_dir / "shap_beeswarm.png",
         "waterfall": output_dir / "shap_waterfall.png",
+        "summary": output_dir / "shap_summary_plot.png",
     }
 
     shap.plots.bar(explanation, max_display=10, show=False)
@@ -60,6 +61,13 @@ def generate_explanations(
 
     shap.plots.waterfall(explanation[sample_position], max_display=10, show=False)
     plt.savefig(paths["waterfall"], dpi=300, bbox_inches="tight")
+    plt.close()
+
+    # Classic SHAP summary plot. show=False keeps the figure open so savefig
+    # writes the chart instead of a blank image.
+    plt.figure(figsize=(10, 6))
+    shap.summary_plot(explanation, max_display=10, show=False)
+    plt.savefig(paths["summary"], dpi=300, bbox_inches="tight")
     plt.close()
 
     logger.success("SHAP plots saved to {}", output_dir)
