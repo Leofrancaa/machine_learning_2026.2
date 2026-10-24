@@ -1,6 +1,7 @@
 """Simulate uncertainty sampling for the Olist delivery-delay problem."""
 
 from dataclasses import dataclass
+from pathlib import Path
 
 from loguru import logger
 import matplotlib.pyplot as plt
@@ -16,9 +17,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.semi_supervised import LabelSpreading
 
-from module_olist.config import INTERIM_DATA_DIR
+from module_olist.config import FIGURES_DIR, INTERIM_DATA_DIR, REPORTS_DIR
 from module_olist.modeling.pipeline import CATEGORICAL_FEATURES, NUMERIC_FEATURES
 from module_olist.modeling.split import split_data
+
+HISTORY_PATH = REPORTS_DIR / "active_learning.csv"
+FIGURE_PATH = FIGURES_DIR / "active_learning.png"
 
 
 @dataclass
@@ -137,8 +141,8 @@ def run_active_learning(
     )
 
 
-def plot_active_learning_results(result: ActiveLearningResult) -> None:
-    """Plot the examples selected at each query round."""
+def plot_active_learning_results(result: ActiveLearningResult, path: Path = FIGURE_PATH) -> None:
+    """Plot the examples selected at each query round and save the figure."""
     if result.selections.empty:
         logger.warning("No examples were selected for plotting.")
         return
@@ -154,7 +158,12 @@ def plot_active_learning_results(result: ActiveLearningResult) -> None:
         axis.barh(selected["sample_index"].astype(str), selected["uncertainty"])
         axis.set(title=f"Query {iteration}: most uncertain examples", xlabel="Label entropy")
     figure.tight_layout()
-    plt.show()
+
+    # Saves the figure in reports/figures instead of only showing it on screen.
+    path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(path, dpi=150)
+    plt.close(figure)
+    logger.success("Active-learning figure saved to {}", path)
 
 
 def main() -> None:
@@ -165,6 +174,12 @@ def main() -> None:
     X_train, _, y_train, _ = split_data(data)
     result = run_active_learning(X_train, y_train)
     logger.info("Active-learning history:\n{}", result.history.to_string(index=False))
+
+    # Saves the history of each round (labeled orders and simulated accuracy).
+    HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    result.history.to_csv(HISTORY_PATH, index=False)
+    logger.success("Active-learning history saved to {}", HISTORY_PATH)
+
     plot_active_learning_results(result)
 
 
