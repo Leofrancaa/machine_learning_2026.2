@@ -33,6 +33,7 @@ DATASET_PATH = INTERIM_DATA_DIR / "dataset.csv"
 MODEL_PATH = MODELS_DIR / "model.pkl"
 SELECTED_MODEL_PATH = MODELS_DIR / "best_model.joblib"
 METADATA_PATH = MODELS_DIR / "metadata.json"
+THRESHOLD_PATH = MODELS_DIR / "threshold.json"
 THRESHOLDS = np.round(np.arange(0.05, 0.96, 0.01), 2)
 
 
@@ -185,8 +186,9 @@ def save_selected_model(
     model_name: str,
     model: object,
     threshold: float,
+    threshold_path: Path | None = None,
 ) -> None:
-    """Save the selected pipeline and inference metadata as separate files."""
+    """Save the selected pipeline, inference metadata and threshold as separate files."""
     model_path.parent.mkdir(parents=True, exist_ok=True)
     metadata_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(model, model_path)
@@ -198,7 +200,19 @@ def save_selected_model(
         "features": FEATURES,
     }
     metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
-    logger.success("Selected model and metadata saved to {} and {}", model_path, metadata_path)
+
+    # threshold.json keeps only the selected model and its decision threshold,
+    # so the operating point can be read without loading the full metadata.
+    threshold_path = threshold_path or metadata_path.with_name("threshold.json")
+    threshold_data = {"model": model_name, "threshold": float(threshold)}
+    threshold_path.write_text(json.dumps(threshold_data, indent=2) + "\n", encoding="utf-8")
+
+    logger.success(
+        "Selected model, metadata and threshold saved to {}, {} and {}",
+        model_path,
+        metadata_path,
+        threshold_path,
+    )
 
 
 def main(
@@ -240,6 +254,7 @@ def main(
         best_name,
         fitted_models[best_name],
         cv_results[best_name]["threshold"],
+        THRESHOLD_PATH,
     )
     logger.success("Cross-validated training completed.")
 

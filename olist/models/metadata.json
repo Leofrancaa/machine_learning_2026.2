@@ -1,0 +1,17 @@
+{
+  "model_name": "lightgbm",
+  "threshold": 0.17,
+  "selection_metric": "f1_oof",
+  "threshold_metric": "f1",
+  "features": [
+    "purchase_hour",
+    "purchase_weekday",
+    "purchase_month",
+    "promised_days",
+    "item_count",
+    "seller_count",
+    "total_price",
+    "total_freight",
+    "customer_state"
+  ]
+}
