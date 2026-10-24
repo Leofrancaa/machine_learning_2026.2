@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 import pickle
 
@@ -58,6 +59,10 @@ def test_selected_model_and_metadata_support_inference(tmp_path):
 
     assert model_name == "test_model"
     assert predictions["prediction"].tolist() == [0, 1, 1]
+
+    # threshold.json is saved next to metadata.json with the selected threshold.
+    saved_threshold = json.loads((tmp_path / "threshold.json").read_text(encoding="utf-8"))
+    assert saved_threshold == {"model": "test_model", "threshold": 0.6}
 
 
 def test_inference_preview_is_short_and_includes_actual_target(tmp_path):
