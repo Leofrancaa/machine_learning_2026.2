@@ -19,107 +19,169 @@ gráficos e conclusões, está em `notebooks/02_eda_order_delay.ipynb`.
 atrasados (`olist_orders_profiling_comparativo.html`). `notebooks/01_data_quality.ipynb`
 gera `reports/profile_olist_orders_profile.html` e valida a tabela com `pandera`.
 
-Para executar a análise, coloque estes arquivos do dataset público da Olist em
-`data/raw/` (a pasta é ignorada pelo Git):
+## Seleção de modelo e active learning
 
-- `olist_orders_dataset.csv`
-- `olist_order_items_dataset.csv`
-- `olist_customers_dataset.csv`
+O treino compara XGBoost, LightGBM e Gradient Boosting com validação cruzada
+estratificada, escolhe o threshold de probabilidade pelo F1 out-of-fold e avalia o
+modelo escolhido num conjunto de teste separado. São salvos `models/model.pkl`,
+`models/best_model.joblib` com `models/metadata.json` (para a inferência com o modelo
+separado) e `models/threshold.json` com o modelo escolhido e o threshold de decisão.
 
-Depois, na raiz do projeto, execute:
+A simulação de active learning roda sobre a partição de treino: começa com 10 pedidos
+rotulados, consulta 5 pedidos incertos por rodada e usa no máximo 1.000 pedidos de
+treino para manter o label spreading leve. O histórico de cada rodada vai para
+`reports/active_learning.csv` e os exemplos escolhidos são plotados em
+`reports/figures/active_learning.png`.
+
+## Explicabilidade com SHAP
+
+O `module_olist.explain` lê `data/interim/dataset.csv` e `models/model.pkl` e salva em
+`reports/figures/` o gráfico de importância global, o beeswarm, um waterfall individual
+e o summary plot clássico (`shap_summary_plot.png`). Os valores SHAP descrevem a saída
+bruta do modelo, que pode estar em log-odds e não em probabilidade.
+
+## Como executar
+
+### 1. Pré-requisitos
+
+- [uv](https://docs.astral.sh/uv/) instalado (ele baixa o Python 3.12 sozinho, se precisar):
+
+  ```bash
+  pip install uv
+  ```
+
+- Dataset público da Olist, baixado do Kaggle:
+  [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
+
+### 2. Colocar os dados em `data/raw/`
+
+Crie a pasta `data/raw/` dentro de `olist/` (ela é ignorada pelo Git) e copie os CSVs:
+
+| Arquivo | Usado por |
+| --- | --- |
+| `olist_orders_dataset.csv` | Pipeline, EDA e todos os notebooks |
+| `olist_order_items_dataset.csv` | Pipeline, EDA e `01_fg_data_profiling.ipynb` |
+| `olist_customers_dataset.csv` | Pipeline, EDA e `01_fg_data_profiling.ipynb` |
+| `olist_order_payments_dataset.csv` | Só `01_fg_data_profiling.ipynb` |
+| `olist_order_reviews_dataset.csv` | Só `01_fg_data_profiling.ipynb` |
+
+### 3. Instalar o ambiente
+
+A partir da raiz do repositório:
+
+```bash
+cd olist
+uv sync
+```
+
+O `uv sync` cria a `.venv` com o Python 3.12 e instala as versões travadas no `uv.lock`.
+
+### 4. Rodar o pipeline (dados + features + treino)
 
 ```bash
 uv run python -m module_olist.main
-uv run jupyter nbconvert --to notebook --execute --inplace notebooks/02_eda_order_delay.ipynb
-uv run jupyter nbconvert --to notebook --execute --inplace notebooks/olist_orders.ipynb
-uv run pytest
-uv run ruff check
 ```
 
-## SHAP explanations
+Lê os CSVs de `data/raw/`, monta o dataset por pedido com as features, salva
+`data/interim/dataset.csv` e treina e avalia os modelos, gerando os arquivos em `models/`.
+Os próximos passos dependem dele.
 
-After training, generate feature attribution plots with:
+### 5. Inferência
+
+```bash
+uv run python -m module_olist.inference
+uv run python -m module_olist.modeling.inference
+```
+
+O primeiro mostra a prévia de pedidos atrasados do conjunto de teste com o `model.pkl`;
+o segundo usa o `best_model.joblib` e o `metadata.json`.
+
+### 6. Explicabilidade (SHAP)
 
 ```bash
 uv run python -m module_olist.explain
 ```
 
-The command reads `data/interim/dataset.csv` and `models/model.pkl`, then saves a
-global importance chart, a beeswarm chart, an individual waterfall chart and the
-classic SHAP summary plot (`shap_summary_plot.png`) in `reports/figures/`. SHAP values describe the model's raw output, which may use
-log-odds rather than probabilities.
-
-## Model selection and active learning
-
-Training compares XGBoost, LightGBM, and Gradient Boosting with stratified
-cross-validation, selects a probability threshold using out-of-fold F1, and
-evaluates the selected model on a held-out test set. It saves both the existing
-`models/model.pkl` artifact and `models/best_model.joblib` with
-`models/metadata.json` for separate-model inference. The selected model and its
-decision threshold are also saved in `models/threshold.json`.
-
-After preparing the dataset, run the active-learning simulation on the training
-partition with:
+### 7. Active learning
 
 ```bash
 uv run python -m module_olist.modeling.active_learning
 ```
 
-It starts with 10 labeled orders, queries five uncertain orders per round, and
-uses at most 1,000 training orders to keep label spreading manageable. The history of
-each round is saved to `reports/active_learning.csv` and the selected examples are
-plotted in `reports/figures/active_learning.png`.
+### 8. Notebooks
 
-## Project Organization
+Para abrir e rodar no Jupyter:
+
+```bash
+uv run jupyter lab
+```
+
+Ordem sugerida em `notebooks/`: `01_fg_data_profiling.ipynb`, `01_data_quality.ipynb`,
+`olist_orders.ipynb`, `02_EDA.ipynb` e `02_eda_order_delay.ipynb`.
+
+Para executar sem abrir o Jupyter (o resultado fica salvo no próprio notebook):
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/02_eda_order_delay.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/olist_orders.ipynb
+```
+
+### 9. Testes e lint
+
+```bash
+uv run pytest
+uv run ruff check
+```
+
+## Organização do projeto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+├── Makefile           <- Comandos de conveniência (make requirements, make data, make lint, make test)
+├── README.md          <- Este arquivo
+├── pyproject.toml     <- Metadados do pacote module_olist, dependências e config do ruff
+├── uv.lock            <- Versões travadas das dependências (usado pelo uv sync)
+├── .python-version    <- Versão do Python usada pelo uv (3.12)
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── data               <- Ignorada pelo Git; criada localmente
+│   ├── raw            <- CSVs originais da Olist
+│   └── interim        <- dataset.csv gerado pelo pipeline
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── docs               <- Projeto mkdocs padrão
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── models             <- model.pkl, best_model.joblib, metadata.json e threshold.json
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         module_olist and configuration for tools like black
+├── notebooks          <- Profiling, qualidade dos dados e EDA
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── references         <- Dicionários de dados, manuais e materiais de apoio
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── reports            <- Relatórios HTML de profiling e active_learning.csv
+│   └── figures        <- Gráficos do SHAP e do active learning
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
+├── tests              <- Testes com pytest
 │
-├── setup.cfg          <- Configuration file for flake8
-│
-└── module_olist   <- Source code for use in this project.
+└── module_olist       <- Código-fonte do projeto
     │
-    ├── __init__.py             <- Makes module_olist a Python module
+    ├── __init__.py             <- Torna module_olist um módulo Python
+    ├── config.py               <- Caminhos e configurações do projeto
+    ├── dataset.py              <- Leitura dos CSVs e montagem do dataset por pedido
+    ├── features.py             <- Criação das features
+    ├── eda.py                  <- Funções da análise exploratória
+    ├── main.py                 <- Pipeline completo: dados, features e treino
+    ├── inference.py            <- Prévia das previsões no conjunto de teste
+    ├── explain.py              <- Gráficos de explicabilidade com SHAP
+    ├── plots.py                <- Código para gerar visualizações
     │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+    └── modeling
+        ├── __init__.py
+        ├── pipeline.py         <- Pipelines dos modelos de boosting
+        ├── split.py            <- Divisão treino/teste
+        ├── cross_validation.py <- Validação cruzada estratificada
+        ├── train.py            <- Treino, seleção do modelo e do threshold
+        ├── evaluate.py         <- Métricas de avaliação
+        ├── predict.py          <- Previsões com o modelo treinado
+        ├── inference.py        <- Inferência com best_model.joblib
+        ├── interpret.py        <- Cálculo dos valores SHAP
+        └── active_learning.py  <- Simulação de active learning
 ```
 
 --------
-
