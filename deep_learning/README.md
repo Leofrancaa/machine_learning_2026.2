@@ -28,70 +28,100 @@ Três notebooks que vão do básico de redes neurais até uma CNN:
 | Jupyter | Execução dos notebooks |
 | uv, ruff, pytest | Ambiente e dependências, lint e testes |
 
-## Ambiente
+## Como executar
 
-O projeto usa o [uv](https://docs.astral.sh/uv/) para gerenciar o Python (3.12) e as
-dependências. Na pasta `deep_learning/`, execute:
+### 1. Pré-requisitos
+
+- [uv](https://docs.astral.sh/uv/) instalado (ele baixa o Python 3.12 sozinho, se precisar):
+
+  ```bash
+  pip install uv
+  ```
+
+- Conexão com a internet: os notebooks baixam os dados na primeira execução
+  (`heart.csv` do Google Storage e o CIFAR-10 pelo `keras.datasets`).
+- Opcional: [Graphviz](https://graphviz.org/download/) instalado e no `PATH`, usado só pela
+  célula de `plot_model` do notebook de dados estruturados. Sem ele, apenas essa célula falha.
+
+### 2. Instalar o ambiente
+
+A partir da raiz do repositório:
 
 ```bash
+cd deep_learning
 uv sync
+```
+
+O `uv sync` cria a `.venv` com o Python 3.12 e instala as versões travadas no `uv.lock`.
+
+### 3. Rodar os notebooks
+
+```bash
+uv run jupyter lab
+```
+
+No Jupyter, abra a pasta `notebooks/` e execute cada notebook do início ao fim
+(*Run > Run All Cells*), nesta ordem:
+
+1. `atividade_tensorflow.ipynb`: roda em segundos.
+2. `structured_data_classification_from_scratch.ipynb`: treino curto (poucos minutos).
+3. `classificador_imagens.ipynb`: treino da CNN; na CPU pode levar bastante tempo.
+
+No VS Code, também dá para abrir os notebooks e escolher o kernel da `.venv` criada pelo `uv sync`.
+
+A execução do projeto é feita pelos notebooks. Os scripts em `module_deep_learning/`
+seguem a estrutura do template CCDS.
+
+### 4. Testes e lint
+
+```bash
 uv run pytest
 uv run ruff check
-uv run jupyter lab
 ```
 
 No Windows, o TensorFlow roda na CPU. Para usar GPU, é preciso WSL2 ou Linux.
 
-## Project Organization
+## Organização do projeto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+├── Makefile           <- Comandos de conveniência (make requirements, make lint, make test)
+├── README.md          <- Este arquivo
+├── pyproject.toml     <- Metadados do pacote module_deep_learning, dependências e config do ruff
+├── uv.lock            <- Versões travadas das dependências (usado pelo uv sync)
+├── .python-version    <- Versão do Python usada pelo uv (3.12)
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── docs               <- Projeto mkdocs padrão
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── models             <- Modelos treinados e serializados
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── notebooks          <- Notebooks dos exercícios (ponto de execução do projeto)
+│   ├── atividade_tensorflow.ipynb
+│   ├── structured_data_classification_from_scratch.ipynb
+│   └── classificador_imagens.ipynb
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         module_deep_learning and configuration for tools like black
+├── references         <- Dicionários de dados, manuais e materiais de apoio
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── reports            <- Análises geradas
+│   └── figures        <- Gráficos e figuras gerados
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── tests              <- Testes com pytest
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── module_deep_learning   <- Source code for use in this project.
+└── module_deep_learning   <- Código-fonte do projeto
     │
-    ├── __init__.py             <- Makes module_deep_learning a Python module
+    ├── __init__.py             <- Torna module_deep_learning um módulo Python
     │
-    ├── config.py               <- Store useful variables and configuration
+    ├── config.py               <- Caminhos e configurações do projeto
     │
-    ├── dataset.py              <- Scripts to download or generate data
+    ├── dataset.py              <- Scripts para baixar ou gerar os dados
     │
-    ├── features.py             <- Code to create features for modeling
+    ├── features.py             <- Código para criar as features
     │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
+    ├── modeling
+    │   ├── __init__.py
+    │   ├── predict.py          <- Inferência com os modelos treinados
+    │   └── train.py            <- Treino dos modelos
     │
-    └── plots.py                <- Code to create visualizations
+    └── plots.py                <- Código para gerar visualizações
 ```
 
 --------
-
