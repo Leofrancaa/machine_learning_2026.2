@@ -38,8 +38,8 @@ Três notebooks que vão do básico de redes neurais até uma CNN:
   pip install uv
   ```
 
-- Conexão com a internet: os notebooks baixam os dados na primeira execução
-  (`heart.csv` do Google Storage e o CIFAR-10 pelo `keras.datasets`).
+- Conexão com a internet: o `heart.csv` é baixado do Google Storage (pelo script
+  `dataset` e pelo notebook) e o CIFAR-10 pelo `keras.datasets`.
 - Opcional: [Graphviz](https://graphviz.org/download/) instalado e no `PATH`, usado só pela
   célula de `plot_model` do notebook de dados estruturados. Sem ele, apenas essa célula falha.
 
@@ -54,7 +54,30 @@ uv sync
 
 O `uv sync` cria a `.venv` com o Python 3.12 e instala as versões travadas no `uv.lock`.
 
-### 3. Rodar os notebooks
+### 3. Rodar o pipeline pelo terminal
+
+O pacote `module_deep_learning` implementa, em scripts, a rede do notebook de dados
+estruturados (classificação de doença cardíaca com Keras). Execute na ordem:
+
+```bash
+uv run python -m module_deep_learning.dataset
+uv run python -m module_deep_learning.features
+uv run python -m module_deep_learning.modeling.train
+uv run python -m module_deep_learning.plots
+uv run python -m module_deep_learning.modeling.predict
+```
+
+| Comando | O que faz | Gera |
+| --- | --- | --- |
+| `dataset` | Baixa o `heart.csv` e separa 80% treino / 20% validação | `data/raw/heart.csv`, `data/processed/train.csv` e `val.csv` |
+| `features` | Normaliza as numéricas e aplica one-hot nas categóricas, com estatísticas só do treino | `data/processed/*_features.csv`, `models/preprocessing.json` |
+| `modeling.train` | Treina a rede Dense(32) → Dropout(0,5) → Dense(1, sigmoid) por 50 épocas | `models/model.keras`, `reports/training_history.csv` |
+| `plots` | Desenha as curvas de loss e acurácia | `reports/figures/training_curves.png` |
+| `modeling.predict` | Calcula a probabilidade de doença para os pacientes de validação e para o paciente de exemplo | `data/processed/val_predictions.csv` |
+
+Cada comando aceita `--help` para ver as opções (por exemplo, `--epochs` no treino).
+
+### 4. Rodar os notebooks
 
 ```bash
 uv run jupyter lab
@@ -69,10 +92,7 @@ No Jupyter, abra a pasta `notebooks/` e execute cada notebook do início ao fim
 
 No VS Code, também dá para abrir os notebooks e escolher o kernel da `.venv` criada pelo `uv sync`.
 
-A execução do projeto é feita pelos notebooks. Os scripts em `module_deep_learning/`
-seguem a estrutura do template CCDS.
-
-### 4. Testes e lint
+### 5. Testes e lint
 
 ```bash
 uv run pytest
@@ -90,9 +110,13 @@ No Windows, o TensorFlow roda na CPU. Para usar GPU, é preciso WSL2 ou Linux.
 ├── uv.lock            <- Versões travadas das dependências (usado pelo uv sync)
 ├── .python-version    <- Versão do Python usada pelo uv (3.12)
 │
+├── data               <- Ignorada pelo Git; criada pelo script dataset
+│   ├── raw            <- heart.csv original
+│   └── processed      <- Treino, validação, features codificadas e previsões
+│
 ├── docs               <- Projeto mkdocs padrão
 │
-├── models             <- Modelos treinados e serializados
+├── models             <- model.keras e preprocessing.json (gerados no pipeline)
 │
 ├── notebooks          <- Notebooks dos exercícios (ponto de execução do projeto)
 │   ├── atividade_tensorflow.ipynb
@@ -101,8 +125,8 @@ No Windows, o TensorFlow roda na CPU. Para usar GPU, é preciso WSL2 ou Linux.
 │
 ├── references         <- Dicionários de dados, manuais e materiais de apoio
 │
-├── reports            <- Análises geradas
-│   └── figures        <- Gráficos e figuras gerados
+├── reports            <- training_history.csv
+│   └── figures        <- training_curves.png
 │
 ├── tests              <- Testes com pytest
 │
@@ -112,16 +136,16 @@ No Windows, o TensorFlow roda na CPU. Para usar GPU, é preciso WSL2 ou Linux.
     │
     ├── config.py               <- Caminhos e configurações do projeto
     │
-    ├── dataset.py              <- Scripts para baixar ou gerar os dados
+    ├── dataset.py              <- Baixa o heart.csv e separa treino e validação
     │
-    ├── features.py             <- Código para criar as features
+    ├── features.py             <- Normalização e one-hot das features
     │
     ├── modeling
     │   ├── __init__.py
-    │   ├── predict.py          <- Inferência com os modelos treinados
-    │   └── train.py            <- Treino dos modelos
+    │   ├── predict.py          <- Probabilidade de doença cardíaca por paciente
+    │   └── train.py            <- Cria e treina a rede neural com Keras
     │
-    └── plots.py                <- Código para gerar visualizações
+    └── plots.py                <- Curvas de loss e acurácia do treino
 ```
 
 --------
