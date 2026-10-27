@@ -1,0 +1,78 @@
+{
+    "roc_auc": 0.7605230543541492,
+    "average_precision": 0.5031627067683998,
+    "threshold": 0.0008639731677249074,
+    "sensitivity": 0.36649214659685864,
+    "specificity": 0.9516908212560387,
+    "precision": 0.5833333333333334,
+    "f1": 0.45016077170418006,
+    "accuracy": 0.8605220228384992,
+    "confusion_matrix": {
+        "tn": 985,
+        "fp": 50,
+        "fn": 121,
+        "tp": 70
+    },
+    "accuracy_all_normal": 0.8442088091353996,
+    "roc_auc_naive": 0.748443230391785,
+    "ranking": {
+        "prevalence": 0.15579119086460033,
+        "precision_at_10": 1.0,
+        "recall_at_10": 0.05235602094240838,
+        "precision_at_25": 0.92,
+        "recall_at_25": 0.12041884816753927,
+        "precision_at_50": 0.76,
+        "recall_at_50": 0.19895287958115182,
+        "precision_at_100": 0.62,
+        "recall_at_100": 0.32460732984293195
+    },
+    "other_anomalies": {
+        "roc_auc_other": 0.6945167400831679,
+        "sensitivity_other": 0.23201856148491878,
+        "n_other": 862
+    },
+    "localization": {
+        "n_exams": 191,
+        "pointing_game": 0.3769633507853403,
+        "energy_in_boxes": 0.2567414343357086,
+        "box_area_fraction": 0.07392028489037958,
+        "extent_spearman": -0.06011284236778909,
+        "box_fraction_in_mask": 0.17593624302032637
+    },
+    "views": {
+        "roc_auc_PA": 0.7605230543541492
+    },
+    "equipment": {
+        "0.139": {
+            "n": 100,
+            "n_positive": 12,
+            "roc_auc": 0.7263257575757576
+        },
+        "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.7979570238807343
+        },
+        "0.168": {
+            "n": 180,
+            "n_positive": 41,
+            "roc_auc": 0.7259168275135989
+        },
+        "0.171": {
+            "n": 81,
+            "n_positive": 18,
+            "roc_auc": 0.6887125220458554
+        },
+        "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.8287815126050421
+        }
+    },
+    "queue_simulation": {
+        "mean_position_arrival": 50.5522,
+        "mean_position_model": 27.29995,
+        "top10_arrival": 1.01,
+        "top10_model": 4.0855
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "version": "v2",
+    "hygiene": true,
+    "views": [
+        "PA"
+    ],
+    "image_size": 128,
+    "latent_dim": 8,
+    "epochs": 40,
+    "seed": 0,
+    "positive_class": "opacidade",
+    "sigma": 8.0,
+    "threshold": 0.0036436626687645912,
+    "threshold_rule": "percentil 95 dos normais da validação",
+    "vmax_map": 0.027497991919517517,
+    "auc_val": 0.7703495096806637
+}

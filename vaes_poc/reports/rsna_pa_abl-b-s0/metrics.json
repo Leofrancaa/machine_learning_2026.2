@@ -1,0 +1,77 @@
+{
+    "roc_auc": 0.778233047525103,
+    "average_precision": 0.44261642793031486,
+    "threshold": 0.004411113914102316,
+    "sensitivity": 0.2670157068062827,
+    "specificity": 0.9449275362318841,
+    "precision": 0.4722222222222222,
+    "f1": 0.3411371237458194,
+    "accuracy": 0.8393148450244698,
+    "confusion_matrix": {
+        "tn": 978,
+        "fp": 57,
+        "fn": 140,
+        "tp": 51
+    },
+    "accuracy_all_normal": 0.8442088091353996,
+    "roc_auc_naive": 0.7131193565520906,
+    "ranking": {
+        "prevalence": 0.15579119086460033,
+        "precision_at_10": 0.9,
+        "recall_at_10": 0.04712041884816754,
+        "precision_at_25": 0.84,
+        "recall_at_25": 0.1099476439790576,
+        "precision_at_50": 0.7,
+        "recall_at_50": 0.18324607329842932,
+        "precision_at_100": 0.51,
+        "recall_at_100": 0.2670157068062827
+    },
+    "other_anomalies": {
+        "roc_auc_other": 0.7131168947622091,
+        "sensitivity_other": 0.22621809744779584,
+        "n_other": 862
+    },
+    "localization": {
+        "n_exams": 191,
+        "pointing_game": 0.17277486910994763,
+        "energy_in_boxes": 0.116637222468853,
+        "box_area_fraction": 0.07392028489037958,
+        "extent_spearman": -0.06233886121290111
+    },
+    "views": {
+        "roc_auc_PA": 0.778233047525103
+    },
+    "equipment": {
+        "0.139": {
+            "n": 100,
+            "n_positive": 12,
+            "roc_auc": 0.8816287878787878
+        },
+        "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.8094295924784123
+        },
+        "0.168": {
+            "n": 180,
+            "n_positive": 41,
+            "roc_auc": 0.6746797683804177
+        },
+        "0.171": {
+            "n": 81,
+            "n_positive": 18,
+            "roc_auc": 0.7671957671957672
+        },
+        "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.701155462184874
+        }
+    },
+    "queue_simulation": {
+        "mean_position_arrival": 50.5522,
+        "mean_position_model": 25.78725,
+        "top10_arrival": 1.01,
+        "top10_model": 3.246
+    }
+}

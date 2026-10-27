@@ -1,0 +1,27 @@
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+
+# ambiente e caches
+.venv/
+.bootstrap/
+.pytest_cache/
+.ruff_cache/
+
+# gerados ao rodar o notebook
+data/
+!interfaces/public/data/
+pesos/
+
+# gerados ao rodar o pipeline (make train)
+models/**/*.pt
+
+# resultados do teste rápido (make quick)
+models/*_quick/
+reports/*_quick/
+
+# rastreamento local do MLflow (make mlflow)
+mlflow.db
+mlartifacts/
+mlruns/

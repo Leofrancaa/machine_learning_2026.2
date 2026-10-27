@@ -1,0 +1,15 @@
+{
+    "views": [
+        "PA"
+    ],
+    "image_size": 128,
+    "latent_dim": 8,
+    "epochs": 40,
+    "seed": 0,
+    "positive_class": "opacidade",
+    "sigma": 10.0,
+    "threshold": 0.0032097490038722754,
+    "threshold_rule": "percentil 95 dos normais da validação",
+    "vmax_map": 0.02267906442284584,
+    "auc_val": 0.754479237202833
+}

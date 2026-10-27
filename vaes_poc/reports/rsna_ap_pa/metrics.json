@@ -1,0 +1,68 @@
+{
+    "roc_auc": 0.7875266309138995,
+    "average_precision": 0.6939499993596637,
+    "threshold": 0.0030996811110526323,
+    "sensitivity": 0.2261640798226164,
+    "specificity": 0.9631024096385542,
+    "precision": 0.8063241106719368,
+    "confusion_matrix": {
+        "tn": 1279,
+        "fp": 49,
+        "fn": 698,
+        "tp": 204
+    },
+    "roc_auc_naive": 0.6666176902732882,
+    "other_anomalies": {
+        "roc_auc_other": 0.7065818264598155,
+        "sensitivity_other": 0.16694867456288776,
+        "n_other": 1773
+    },
+    "localization": {
+        "n_exams": 902,
+        "pointing_game": 0.1164079822616408,
+        "energy_in_boxes": 0.13256444036960602,
+        "box_area_fraction": 0.1260664235726164,
+        "extent_spearman": -0.019205031821762676
+    },
+    "views": {
+        "roc_auc_AP": 0.6641892599183503,
+        "roc_auc_PA": 0.7626772169764076,
+        "roc_auc_ap_vs_pa_normals": 0.7008175164930948
+    },
+    "comparison": {
+        "Brilho médio": {
+            "auc_test": 0.4322,
+            "auc_test_std": 0.0
+        },
+        "Imagem média": {
+            "auc_test": 0.5953,
+            "auc_test_std": 0.0
+        },
+        "PCA (8 componentes)": {
+            "auc_test": 0.7653,
+            "auc_test_std": 0.0
+        },
+        "Autoencoder comum": {
+            "auc_test": 0.8022,
+            "auc_test_std": 0.0055
+        },
+        "VAE": {
+            "auc_test": 0.7915,
+            "auc_test_std": 0.011
+        },
+        "Nível de detalhe*": {
+            "auc_test": 0.7073,
+            "auc_test_std": 0.0
+        },
+        "CNN supervisionada*": {
+            "auc_test": 0.9357,
+            "auc_test_std": 0.0
+        }
+    },
+    "queue_simulation": {
+        "mean_position_arrival": 50.532300000000006,
+        "mean_position_model": 24.90785,
+        "top10_arrival": 1.01,
+        "top10_model": 3.315
+    }
+}

@@ -1,0 +1,432 @@
+.queue-toolbar {
+  flex-wrap: wrap;
+}
+.model-control {
+  flex-wrap: wrap;
+}
+.run-provenance {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 13px;
+  border-left: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--muted);
+}
+.run-provenance strong {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+}
+.presentation-toggle[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: #426c58;
+  background: #1c352b;
+}
+.simulation-console {
+  display: grid;
+  grid-template-columns: minmax(165px, 0.65fr) minmax(120px, 1fr);
+  gap: 14px 24px;
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border: 1px solid #315347;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #172923, #131c21);
+}
+.simulation-phase {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  font-size: 12px;
+}
+.simulation-phase strong {
+  font-weight: 550;
+}
+.simulation-phase > span:last-child {
+  margin-left: auto;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.simulation-console progress {
+  width: 100%;
+  height: 5px;
+  accent-color: var(--accent);
+  align-self: center;
+}
+.simulation-settings {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid #2a4037;
+}
+.simulation-settings > label:not(.switch) {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.simulation-settings select {
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.simulation-settings .switch {
+  font-size: 11px;
+}
+.simulation-settings .btn {
+  margin-left: auto;
+}
+.arrival-narration {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 46px;
+  padding: 12px;
+  border: 1px solid #ffffff0d;
+  border-radius: 7px;
+  background: #0b151780;
+}
+.arrival-narration > svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.arrival-narration img {
+  border-radius: 4px;
+  background: #000;
+}
+.arrival-narration p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.arrival-narration p > span:first-child {
+  color: var(--accent);
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.arrival-narration p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.is-live {
+  animation: live-pulse 1.2s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  50% {
+    box-shadow: 0 0 0 5px #65debb20;
+  }
+}
+.queue-comparison-grid {
+  position: relative;
+  gap: 44px;
+}
+.queue-connection {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+.queue-connection > path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-dasharray: 4 3;
+  opacity: 0.85;
+}
+.queue-connection > circle {
+  fill: var(--accent);
+}
+.comparison-list ol {
+  max-height: 270px;
+}
+.comparison-list li > button {
+  position: relative;
+  min-height: 54px;
+  font-size: 12px;
+  padding-block: 11px 13px;
+}
+.comparison-list li > button[aria-pressed="true"] {
+  box-shadow: inset 3px 0 var(--accent);
+  border-color: #5b997b;
+}
+.comparison-list li.latest-arrival > button {
+  animation: arrival-pulse 1s ease-out;
+}
+.comparison-list .latest-arrival .comparison-rank {
+  color: var(--accent);
+}
+.arrival-chip {
+  margin-left: 7px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #65debb20;
+  color: var(--accent);
+  font: 8px var(--font);
+}
+.comparison-score-track {
+  position: absolute;
+  bottom: 4px;
+  left: 11px;
+  right: 11px;
+  height: 2px;
+  background: #26343d;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.comparison-score-track i {
+  display: block;
+  height: 100%;
+  background: #7896a3;
+  transition: width 0.3s ease-out;
+}
+.comparison-score-track i.over {
+  background: var(--flag);
+}
+.queue-visual-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.queue-visual-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.queue-visual-legend > span:last-child {
+  margin-left: auto;
+}
+.queue-visual-legend i {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+}
+.legend-selected {
+  background: var(--accent);
+}
+.legend-new {
+  background: #65debb20;
+}
+.movement-explanation {
+  border: 1px solid #365c49;
+  background: #1c352b;
+  border-radius: 7px;
+  padding: 13px;
+}
+.decision-reading {
+  margin-top: 15px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+}
+.decision-reading strong {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--accent);
+}
+.decision-reading p {
+  font-size: 12px;
+  line-height: 1.85;
+  color: var(--muted);
+  margin: 7px 0 0;
+}
+.decision-reading.disagrees {
+  border-color: #735c38;
+  background: #30261850;
+}
+.decision-reading.disagrees strong {
+  color: var(--flag);
+}
+.ranking-reading {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #735c38;
+  background: #30261850;
+  border-radius: 7px;
+}
+.ranking-reading summary {
+  color: var(--flag);
+  font-size: 12px;
+  cursor: pointer;
+}
+.ranking-reading p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.85;
+  margin-bottom: 0;
+}
+.ranking-reading b {
+  color: var(--text);
+  font-weight: 550;
+}
+@keyframes arrival-pulse {
+  from {
+    background: #315745;
+  }
+}
+.triage-experience.presentation {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(330px, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.triage-experience.presentation > .queue-layout {
+  display: contents;
+}
+.triage-experience.presentation .worklist {
+  display: none;
+}
+.triage-experience.presentation .queue-comparison {
+  margin-bottom: 0;
+}
+.triage-experience.presentation .queue-comparison-grid {
+  gap: 29px;
+}
+.triage-experience.presentation .comparison-list-heading {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.triage-experience.presentation .comparison-list ol {
+  max-height: 450px;
+}
+.triage-experience.presentation .comparison-list img {
+  display: none;
+}
+.triage-experience.presentation .comparison-exam-id {
+  font-size: 11px;
+}
+.triage-experience.presentation .arrival-chip {
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  margin: 0;
+}
+.triage-experience.presentation .comparison-exam-detail {
+  font-size: 10px;
+}
+@media (min-width: 1151px) {
+  .queue-layout {
+    align-items: stretch;
+  }
+  .queue-layout > .worklist {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .queue-layout > .worklist[hidden] {
+    display: none;
+  }
+  .queue-layout > .worklist > :not(.rows) {
+    flex-shrink: 0;
+  }
+  .queue-layout > .worklist > .rows {
+    flex: 1 1 0;
+    height: 0;
+    min-height: 260px;
+    max-height: none;
+    overflow-y: auto;
+  }
+  .queue-layout > .viewer {
+    position: static;
+    align-self: stretch;
+  }
+}
+@media (max-width: 1200px) {
+  .triage-experience.presentation {
+    grid-template-columns: 1fr;
+  }
+  .triage-experience.presentation .comparison-list ol {
+    max-height: 320px;
+  }
+}
+@media (max-width: 760px) {
+  .run-provenance {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .simulation-console {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 16px 13px;
+  }
+  .simulation-settings {
+    gap: 13px;
+  }
+  .simulation-settings > label:not(.switch) {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .simulation-settings .switch {
+    font-size: 12px;
+  }
+  .simulation-settings .btn {
+    margin: 0;
+    font-size: 11px;
+  }
+  .arrival-narration p {
+    gap: 6px 9px;
+  }
+  .queue-comparison-grid,
+  .triage-experience.presentation .queue-comparison-grid {
+    gap: 22px;
+  }
+  .comparison-list li > button {
+    min-height: 58px;
+    font-size: 11px;
+    padding: 12px 5px;
+  }
+  .comparison-list ol {
+    max-height: 280px;
+  }
+  .comparison-list .arrival-chip {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    font-size: 7px;
+    margin: 0;
+  }
+  .comparison-score-track {
+    left: 6px;
+    right: 6px;
+  }
+  .queue-visual-legend {
+    font-size: 9px;
+    gap: 9px;
+  }
+  .queue-visual-legend > span:last-child {
+    margin-left: 0;
+    width: 100%;
+  }
+  .triage-experience.presentation .comparison-exam-id {
+    font-size: 10px;
+  }
+}

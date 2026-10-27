@@ -1,0 +1,53 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "module_vae"
+version = "0.0.1"
+description = "Triagem de raio-X de tórax com VAE (RSNA Pneumonia)"
+authors = [
+  { name = "rmotti" },
+]
+
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+
+]
+dependencies = [
+    "kagglehub>=1.0.2",
+    "loguru",
+    "matplotlib",
+    "mlflow>=3.17.1",
+    "numpy",
+    "pandas",
+    "pydicom>=3.0.2",
+    "scikit-learn",
+    "scipy",
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "tqdm",
+    "typer",
+]
+requires-python = "~=3.12.0"
+
+[dependency-groups]
+dev = [
+    "ipykernel",
+    "pytest",
+    "ruff",
+]
+
+
+[tool.ruff]
+line-length = 99
+src = ["module_vae"]
+include = ["pyproject.toml", "module_vae/**/*.py", "tests/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["module_vae"]
+force-sort-within-sections = true

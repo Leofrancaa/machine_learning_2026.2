@@ -1,0 +1,20 @@
+{
+    "version": "abl-a-s0",
+    "hygiene": true,
+    "views": [
+        "PA"
+    ],
+    "image_size": 128,
+    "latent_dim": 8,
+    "epochs": 40,
+    "seed": 0,
+    "positive_class": "opacidade",
+    "sigma": 8.0,
+    "threshold": 0.003192649921402335,
+    "threshold_rule": "percentil 95 dos normais da validação",
+    "vmax_map": 0.025130681693553925,
+    "auc_val": 0.7741111390495348,
+    "crop_borders": true,
+    "normalize": false,
+    "lung_mask": false
+}

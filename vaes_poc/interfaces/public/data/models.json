@@ -1,0 +1,1752 @@
+{
+  "schema": 1,
+  "runs": [
+    {
+      "id": "rsna_ap_pa",
+      "version": "v1",
+      "scope": "ap_pa",
+      "metadata": {
+        "views": [
+          "AP",
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 12,
+        "threshold": 0.0030996811110526323,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.022875573486089706,
+        "auc_val": 0.7918992709828448
+      },
+      "metrics": {
+        "roc_auc": 0.7875266309138995,
+        "average_precision": 0.6939499993596637,
+        "threshold": 0.0030996811110526323,
+        "sensitivity": 0.2261640798226164,
+        "specificity": 0.9631024096385542,
+        "precision": 0.8063241106719368,
+        "confusion_matrix": {
+          "tn": 1279,
+          "fp": 49,
+          "fn": 698,
+          "tp": 204
+        },
+        "roc_auc_naive": 0.6666176902732882,
+        "other_anomalies": {
+          "roc_auc_other": 0.7065818264598155,
+          "sensitivity_other": 0.16694867456288776,
+          "n_other": 1773
+        },
+        "localization": {
+          "n_exams": 902,
+          "pointing_game": 0.1164079822616408,
+          "energy_in_boxes": 0.13256444036960602,
+          "box_area_fraction": 0.1260664235726164,
+          "extent_spearman": -0.019205031821762676
+        },
+        "views": {
+          "roc_auc_AP": 0.6641892599183503,
+          "roc_auc_PA": 0.7626772169764076,
+          "roc_auc_ap_vs_pa_normals": 0.7008175164930948
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.4322,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.5953,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.7653,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.8022,
+            "auc_test_std": 0.0055
+          },
+          "VAE": {
+            "auc_test": 0.7915,
+            "auc_test_std": 0.011
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.7073,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.9357,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.532300000000006,
+          "mean_position_model": 24.90785,
+          "top10_arrival": 1.01,
+          "top10_model": 3.315
+        }
+      },
+      "n": 2230,
+      "positives": 902,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.24611973392461198,
+          "specificity": 0.9495101733232856,
+          "precision": 0.7681660899653979
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.2261640798226164,
+          "specificity": 0.9631024096385542,
+          "precision": 0.8063241106719368
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.4379157427937916,
+          "specificity": 0.8997739261492087,
+          "precision": 0.7481060606060606
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.4212860310421286,
+          "specificity": 0.8945783132530121,
+          "precision": 0.7307692307692307
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.6330376940133038,
+          "specificity": 0.7995478522984175,
+          "precision": 0.6821983273596177
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.6130820399113082,
+          "specificity": 0.795933734939759,
+          "precision": 0.6711165048543689
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.7239467849223947,
+          "specificity": 0.73474001507159,
+          "precision": 0.6497512437810945
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.7106430155210643,
+          "specificity": 0.7243975903614458,
+          "precision": 0.6365441906653426
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.44224757175296625,
+          "auc_test": 0.4322143062271258,
+          "auc_test_std": 0,
+          "ap_test": 0.35805894845253294,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 10,
+          "auc_val": 0.5807566539733356,
+          "auc_test": 0.5953470200090829,
+          "auc_test_std": 0,
+          "ap_test": 0.47469382052732195,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 16,
+          "auc_val": 0.7591970952935535,
+          "auc_test": 0.7652969138193573,
+          "auc_test_std": 0,
+          "ap_test": 0.698109004783898,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": 12,
+          "auc_val": 0.8051122543834879,
+          "auc_test": 0.8021868516193376,
+          "auc_test_std": 0.005457217934480051,
+          "ap_test": 0.7169968598041256,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "12.0, 10.0",
+          "auc_val": 0.7945816352730904,
+          "auc_test": 0.7915023453013829,
+          "auc_test_std": 0.01096724782064876,
+          "ap_test": 0.7013545393645731,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.7053487435607384,
+          "auc_test": 0.7073421179173457,
+          "auc_test_std": 0,
+          "ap_test": 0.6067281445106675,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.9315687988009566,
+          "auc_test": 0.9357026220180055,
+          "auc_test_std": 0,
+          "ap_test": 0.926569928424083,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_ap_pa/metadata.json",
+        "reports/rsna_ap_pa/metrics.json",
+        "reports/rsna_ap_pa/thresholds.csv",
+        "reports/rsna_ap_pa/method_comparison.csv"
+      ]
+    },
+    {
+      "id": "rsna_ap_pa_v2",
+      "version": "v2",
+      "scope": "ap_pa",
+      "metadata": {
+        "version": "v2",
+        "hygiene": true,
+        "views": [
+          "AP",
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 12,
+        "threshold": 0.0027764805126935244,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.022240610793232918,
+        "auc_val": 0.8184374494063201
+      },
+      "metrics": {
+        "roc_auc": 0.8126362768663487,
+        "average_precision": 0.7419039199271911,
+        "threshold": 0.0027764805126935244,
+        "sensitivity": 0.3034647550776583,
+        "specificity": 0.9556611243072051,
+        "precision": 0.8193548387096774,
+        "f1": 0.44289450741063646,
+        "accuracy": 0.6957142857142857,
+        "confusion_matrix": {
+          "tn": 1207,
+          "fp": 56,
+          "fn": 583,
+          "tp": 254
+        },
+        "accuracy_all_normal": 0.6014285714285714,
+        "roc_auc_naive": 0.6823364370167935,
+        "ranking": {
+          "prevalence": 0.3985714285714286,
+          "precision_at_10": 0.9,
+          "recall_at_10": 0.010752688172043012,
+          "precision_at_25": 0.92,
+          "recall_at_25": 0.027479091995221028,
+          "precision_at_50": 0.96,
+          "recall_at_50": 0.05734767025089606,
+          "precision_at_100": 0.94,
+          "recall_at_100": 0.11230585424133811
+        },
+        "other_anomalies": {
+          "roc_auc_other": 0.7187932348741886,
+          "sensitivity_other": 0.20023282887077998,
+          "n_other": 1718
+        },
+        "localization": {
+          "n_exams": 837,
+          "pointing_game": 0.11230585424133811,
+          "energy_in_boxes": 0.13320937752723694,
+          "box_area_fraction": 0.1289661184149119,
+          "extent_spearman": 0.059337178278263535
+        },
+        "views": {
+          "roc_auc_AP": 0.7178045733528869,
+          "roc_auc_PA": 0.7570275944052407,
+          "roc_auc_ap_vs_pa_normals": 0.6926392067124333
+        },
+        "equipment": {
+          "0.139": {
+            "n": 426,
+            "n_positive": 252,
+            "roc_auc": 0.7561576354679803
+          },
+          "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.7771131459071458
+          },
+          "0.168": {
+            "n": 647,
+            "n_positive": 391,
+            "roc_auc": 0.719739050511509
+          },
+          "0.171": {
+            "n": 162,
+            "n_positive": 74,
+            "roc_auc": 0.8703931203931204
+          },
+          "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.7310924369747899
+          }
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.4394,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.5977,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.787,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.8124,
+            "auc_test_std": 0.0023
+          },
+          "VAE": {
+            "auc_test": 0.8101,
+            "auc_test_std": 0.004
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.7202,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.9473,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.5522,
+          "mean_position_model": 22.134700000000002,
+          "top10_arrival": 1.01,
+          "top10_model": 3.9485
+        }
+      },
+      "n": 2100,
+      "positives": 837,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.33884297520661155,
+          "specificity": 0.9494787489975942,
+          "precision": 0.82,
+          "f1": 0.47953216374269003,
+          "accuracy": 0.7024832855778415
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.3034647550776583,
+          "specificity": 0.9556611243072051,
+          "precision": 0.8193548387096774,
+          "f1": 0.44289450741063646,
+          "accuracy": 0.6957142857142857
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.5064935064935064,
+          "specificity": 0.8997594226142742,
+          "precision": 0.7743682310469314,
+          "f1": 0.6124197002141327,
+          "accuracy": 0.7406876790830945
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.4850657108721625,
+          "specificity": 0.9026128266033254,
+          "precision": 0.7674858223062382,
+          "f1": 0.5944363103953147,
+          "accuracy": 0.7361904761904762
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.7024793388429752,
+          "specificity": 0.7995188452285485,
+          "precision": 0.7041420118343196,
+          "f1": 0.7033096926713948,
+          "accuracy": 0.7602674307545367
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.6583034647550776,
+          "specificity": 0.7980997624703088,
+          "precision": 0.6836228287841191,
+          "f1": 0.6707242848447961,
+          "accuracy": 0.7423809523809524
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.7024793388429752,
+          "specificity": 0.8019246190858059,
+          "precision": 0.7066508313539193,
+          "f1": 0.7045589105979869,
+          "accuracy": 0.7617000955109837
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.6583034647550776,
+          "specificity": 0.7988915281076802,
+          "precision": 0.684472049689441,
+          "f1": 0.6711327649208283,
+          "accuracy": 0.7428571428571429
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "val",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.5955109837631327
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "test",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.6014285714285714
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.44312063237484245,
+          "auc_test": 0.43940580684891467,
+          "auc_test_std": 0,
+          "ap_test": 0.3544219308648111,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 8,
+          "auc_val": 0.5903467022151866,
+          "auc_test": 0.5976875146032044,
+          "auc_test_std": 0,
+          "ap_test": 0.46008287969779493,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 16,
+          "auc_val": 0.7857374818809535,
+          "auc_test": 0.7870434222437901,
+          "auc_test_std": 0,
+          "ap_test": 0.7302459623407147,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": 12,
+          "auc_val": 0.8110749545465592,
+          "auc_test": 0.8123553277692168,
+          "auc_test_std": 0.0022625738446462205,
+          "ap_test": 0.7307038742069268,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "12.0, 10.0",
+          "auc_val": 0.8113965449388646,
+          "auc_test": 0.8100572839758428,
+          "auc_test_std": 0.003959713843684332,
+          "ap_test": 0.7379693082811931,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.7131902871496077,
+          "auc_test": 0.7202390243025698,
+          "auc_test_std": 0,
+          "ap_test": 0.6141021847621674,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.9441256418000603,
+          "auc_test": 0.9473348147013001,
+          "auc_test_std": 0,
+          "ap_test": 0.936688895396117,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_ap_pa_v2/metadata.json",
+        "reports/rsna_ap_pa_v2/metrics.json",
+        "reports/rsna_ap_pa_v2/thresholds.csv",
+        "reports/rsna_ap_pa_v2/method_comparison.csv"
+      ]
+    },
+    {
+      "id": "rsna_ap_pa_v3",
+      "version": "v3",
+      "scope": "ap_pa",
+      "metadata": {
+        "version": "v3",
+        "hygiene": true,
+        "views": [
+          "AP",
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 6,
+        "threshold": 0.0019025064539164305,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.03638121485710144,
+        "auc_val": 0.864884696116015,
+        "crop_borders": false,
+        "normalize": true,
+        "lung_mask": true
+      },
+      "metrics": {
+        "roc_auc": 0.869708673759449,
+        "average_precision": 0.8288259267129987,
+        "threshold": 0.0019025064539164305,
+        "sensitivity": 0.4850657108721625,
+        "specificity": 0.9564528899445764,
+        "precision": 0.8806941431670282,
+        "f1": 0.6255778120184899,
+        "accuracy": 0.7685714285714286,
+        "confusion_matrix": {
+          "tn": 1208,
+          "fp": 55,
+          "fn": 431,
+          "tp": 406
+        },
+        "accuracy_all_normal": 0.6014285714285714,
+        "roc_auc_naive": 0.8057724160960185,
+        "ranking": {
+          "prevalence": 0.3985714285714286,
+          "precision_at_10": 1,
+          "recall_at_10": 0.011947431302270013,
+          "precision_at_25": 1,
+          "recall_at_25": 0.02986857825567503,
+          "precision_at_50": 0.98,
+          "recall_at_50": 0.05854241338112306,
+          "precision_at_100": 0.98,
+          "recall_at_100": 0.11708482676224612
+        },
+        "other_anomalies": {
+          "roc_auc_other": 0.7706637927140971,
+          "sensitivity_other": 0.330034924330617,
+          "n_other": 1718
+        },
+        "localization": {
+          "n_exams": 837,
+          "pointing_game": 0.3870967741935484,
+          "energy_in_boxes": 0.34644123911857605,
+          "box_area_fraction": 0.1289661184149119,
+          "extent_spearman": 0.1569626352692932,
+          "box_fraction_in_mask": 0.2783547382779602
+        },
+        "views": {
+          "roc_auc_AP": 0.8247718755092064,
+          "roc_auc_PA": 0.8180084477830893,
+          "roc_auc_ap_vs_pa_normals": 0.6566276803118909
+        },
+        "equipment": {
+          "0.139": {
+            "n": 426,
+            "n_positive": 252,
+            "roc_auc": 0.8636881955847474
+          },
+          "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.8278041074249605
+          },
+          "0.168": {
+            "n": 647,
+            "n_positive": 391,
+            "roc_auc": 0.8205322890025575
+          },
+          "0.171": {
+            "n": 162,
+            "n_positive": 74,
+            "roc_auc": 0.8897420147420149
+          },
+          "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.8140756302521008
+          }
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.5339,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.6564,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.8273,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.8644,
+            "auc_test_std": 0.0016
+          },
+          "VAE": {
+            "auc_test": 0.873,
+            "auc_test_std": 0.005
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.7084,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.9546,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.5522,
+          "mean_position_model": 17.1068,
+          "top10_arrival": 1.01,
+          "top10_model": 5.23
+        }
+      },
+      "n": 2100,
+      "positives": 837,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.5064935064935064,
+          "specificity": 0.9494787489975942,
+          "precision": 0.8719512195121951,
+          "f1": 0.6407766990291263,
+          "accuracy": 0.7702960840496658
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.4850657108721625,
+          "specificity": 0.9564528899445764,
+          "precision": 0.8806941431670282,
+          "f1": 0.6255778120184899,
+          "accuracy": 0.7685714285714286
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.6174734356552538,
+          "specificity": 0.8997594226142742,
+          "precision": 0.8070987654320988,
+          "f1": 0.6996655518394649,
+          "accuracy": 0.7855778414517669
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.6200716845878136,
+          "specificity": 0.9208234362628662,
+          "precision": 0.8384491114701131,
+          "f1": 0.7129120879120879,
+          "accuracy": 0.800952380952381
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.7768595041322314,
+          "specificity": 0.7995188452285485,
+          "precision": 0.724669603524229,
+          "f1": 0.7498575498575498,
+          "accuracy": 0.7903533906399236
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.7718040621266428,
+          "specificity": 0.8258115597783057,
+          "precision": 0.745958429561201,
+          "f1": 0.7586611861421022,
+          "accuracy": 0.8042857142857143
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.7615112160566706,
+          "specificity": 0.8203688853247795,
+          "precision": 0.7422324510932106,
+          "f1": 0.7517482517482518,
+          "accuracy": 0.7965616045845272
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.7455197132616488,
+          "specificity": 0.8424386381631037,
+          "precision": 0.7582017010935601,
+          "f1": 0.7518072289156627,
+          "accuracy": 0.8038095238095239
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "val",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.5955109837631327
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "test",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.6014285714285714
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.5362442471139708,
+          "auc_test": 0.5338633527916596,
+          "auc_test_std": 0,
+          "ap_test": 0.3985205992772639,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 4,
+          "auc_val": 0.6585789365551704,
+          "auc_test": 0.6563500644669392,
+          "auc_test_std": 0,
+          "ap_test": 0.5942494069768796,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 10,
+          "auc_val": 0.8316384351960644,
+          "auc_test": 0.8273090090064524,
+          "auc_test_std": 0,
+          "ap_test": 0.7912345345446632,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": 6,
+          "auc_val": 0.8639716823722071,
+          "auc_test": 0.8644352812786055,
+          "auc_test_std": 0.0016007989705354077,
+          "ap_test": 0.8187478068126165,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "6.0, 8.0",
+          "auc_val": 0.86728226452656,
+          "auc_test": 0.8730229902128182,
+          "auc_test_std": 0.004966380057169597,
+          "ap_test": 0.8325175686602289,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.6855073191006704,
+          "auc_test": 0.7083511882633278,
+          "auc_test_std": 0,
+          "ap_test": 0.6391147667709869,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.9446681480653925,
+          "auc_test": 0.9545921933989259,
+          "auc_test_std": 0,
+          "ap_test": 0.9458906989426459,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_ap_pa_v3/metadata.json",
+        "reports/rsna_ap_pa_v3/metrics.json",
+        "reports/rsna_ap_pa_v3/thresholds.csv",
+        "reports/rsna_ap_pa_v3/method_comparison.csv"
+      ]
+    },
+    {
+      "id": "rsna_pa",
+      "version": "v1",
+      "scope": "pa",
+      "metadata": {
+        "views": [
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 10,
+        "threshold": 0.0032097490038722754,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.02267906442284584,
+        "auc_val": 0.754479237202833
+      },
+      "metrics": {
+        "roc_auc": 0.7567176274550867,
+        "average_precision": 0.44850863378842665,
+        "threshold": 0.0032097490038722754,
+        "sensitivity": 0.2857142857142857,
+        "specificity": 0.9574861367837338,
+        "precision": 0.5576923076923077,
+        "confusion_matrix": {
+          "tn": 1036,
+          "fp": 46,
+          "fn": 145,
+          "tp": 58
+        },
+        "roc_auc_naive": 0.6894548500769418,
+        "other_anomalies": {
+          "roc_auc_other": 0.693736893147551,
+          "sensitivity_other": 0.19506726457399104,
+          "n_other": 892
+        },
+        "localization": {
+          "n_exams": 203,
+          "pointing_game": 0.2512315270935961,
+          "energy_in_boxes": 0.13500693440437317,
+          "box_area_fraction": 0.07339462505772783,
+          "extent_spearman": -0.1383319842893886
+        },
+        "views": {
+          "roc_auc_PA": 0.7567176274550867
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.4886,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.6578,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.7445,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.7569,
+            "auc_test_std": 0.0022
+          },
+          "VAE": {
+            "auc_test": 0.7573,
+            "auc_test_std": 0.0023
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.5541,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.8248,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.5522,
+          "mean_position_model": 27.314899999999998,
+          "top10_arrival": 1.01,
+          "top10_model": 3.7125
+        }
+      },
+      "n": 1285,
+      "positives": 203,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.297029702970297,
+          "specificity": 0.9491682070240296,
+          "precision": 0.5217391304347826
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.2857142857142857,
+          "specificity": 0.9574861367837338,
+          "precision": 0.5576923076923077
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.39603960396039606,
+          "specificity": 0.899260628465804,
+          "precision": 0.42328042328042326
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.4088669950738916,
+          "specificity": 0.9149722735674677,
+          "precision": 0.4742857142857143
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.5891089108910891,
+          "specificity": 0.7994454713493531,
+          "precision": 0.3541666666666667
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.5812807881773399,
+          "specificity": 0.8151571164510166,
+          "precision": 0.3710691823899371
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.6287128712871287,
+          "specificity": 0.7726432532347505,
+          "precision": 0.34048257372654156
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.6206896551724138,
+          "specificity": 0.7874306839186691,
+          "precision": 0.3539325842696629
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.5030471623872184,
+          "auc_test": 0.48864081294446515,
+          "auc_test_std": 0,
+          "ap_test": 0.1722117783046101,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 10,
+          "auc_val": 0.6151607767061364,
+          "auc_test": 0.657758393050636,
+          "auc_test_std": 0,
+          "ap_test": 0.2551466379298403,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 12,
+          "auc_val": 0.7224977580937392,
+          "auc_test": 0.7445389399306156,
+          "auc_test_std": 0,
+          "ap_test": 0.40704718745173724,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": "10.0, 12.0",
+          "auc_val": 0.7596844250044228,
+          "auc_test": 0.7568648340208032,
+          "auc_test_std": 0.00215409709165692,
+          "ap_test": 0.44358791241393924,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "10.0, 12.0",
+          "auc_val": 0.7611164998200376,
+          "auc_test": 0.7572821722225762,
+          "auc_test_std": 0.002332752437960695,
+          "ap_test": 0.44639046470861793,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.577098698779305,
+          "auc_test": 0.5541234531928649,
+          "auc_test_std": 0,
+          "ap_test": 0.18027929452761554,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.8113138485752458,
+          "auc_test": 0.824813563643317,
+          "auc_test_std": 0,
+          "ap_test": 0.5706970657518893,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_pa/metadata.json",
+        "reports/rsna_pa/metrics.json",
+        "reports/rsna_pa/thresholds.csv",
+        "reports/rsna_pa/method_comparison.csv"
+      ]
+    },
+    {
+      "id": "rsna_pa_v2",
+      "version": "v2",
+      "scope": "pa",
+      "metadata": {
+        "version": "v2",
+        "hygiene": true,
+        "views": [
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 8,
+        "threshold": 0.0036436626687645912,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.027497991919517517,
+        "auc_val": 0.7703495096806637
+      },
+      "metrics": {
+        "roc_auc": 0.7686369729620356,
+        "average_precision": 0.45919831062563526,
+        "threshold": 0.0036436626687645912,
+        "sensitivity": 0.2931937172774869,
+        "specificity": 0.9487922705314009,
+        "precision": 0.5137614678899083,
+        "f1": 0.37333333333333335,
+        "accuracy": 0.8466557911908646,
+        "confusion_matrix": {
+          "tn": 982,
+          "fp": 53,
+          "fn": 135,
+          "tp": 56
+        },
+        "accuracy_all_normal": 0.8442088091353996,
+        "roc_auc_naive": 0.700341452310494,
+        "ranking": {
+          "prevalence": 0.15579119086460033,
+          "precision_at_10": 0.9,
+          "recall_at_10": 0.04712041884816754,
+          "precision_at_25": 0.84,
+          "recall_at_25": 0.1099476439790576,
+          "precision_at_50": 0.68,
+          "recall_at_50": 0.17801047120418848,
+          "precision_at_100": 0.51,
+          "recall_at_100": 0.2670157068062827
+        },
+        "other_anomalies": {
+          "roc_auc_other": 0.6992400551464406,
+          "sensitivity_other": 0.21577726218097448,
+          "n_other": 862
+        },
+        "localization": {
+          "n_exams": 191,
+          "pointing_game": 0.13612565445026178,
+          "energy_in_boxes": 0.11729687452316284,
+          "box_area_fraction": 0.07392028489037958,
+          "extent_spearman": -0.07708742011434543
+        },
+        "views": {
+          "roc_auc_PA": 0.7686369729620356
+        },
+        "equipment": {
+          "0.139": {
+            "n": 100,
+            "n_positive": 12,
+            "roc_auc": 0.8238636363636364
+          },
+          "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.813785487507477
+          },
+          "0.168": {
+            "n": 180,
+            "n_positive": 41,
+            "roc_auc": 0.7088962975960695
+          },
+          "0.171": {
+            "n": 81,
+            "n_positive": 18,
+            "roc_auc": 0.8536155202821869
+          },
+          "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.7331932773109243
+          }
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.491,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.6637,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.7478,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.7551,
+            "auc_test_std": 0.0052
+          },
+          "VAE": {
+            "auc_test": 0.7651,
+            "auc_test_std": 0.0088
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.5596,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.8754,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.5522,
+          "mean_position_model": 26.66525,
+          "top10_arrival": 1.01,
+          "top10_model": 3.5205
+        }
+      },
+      "n": 1226,
+      "positives": 191,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.33505154639175255,
+          "specificity": 0.9492682926829268,
+          "precision": 0.5555555555555556,
+          "f1": 0.4180064308681672,
+          "accuracy": 0.8515176374077112
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.2931937172774869,
+          "specificity": 0.9487922705314009,
+          "precision": 0.5137614678899083,
+          "f1": 0.37333333333333335,
+          "accuracy": 0.8466557911908646
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.42783505154639173,
+          "specificity": 0.8995121951219512,
+          "precision": 0.44623655913978494,
+          "f1": 0.4368421052631579,
+          "accuracy": 0.8244462674323215
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.450261780104712,
+          "specificity": 0.8917874396135266,
+          "precision": 0.43434343434343436,
+          "f1": 0.442159383033419,
+          "accuracy": 0.8230016313213703
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.6030927835051546,
+          "specificity": 0.8,
+          "precision": 0.36335403726708076,
+          "f1": 0.45348837209302323,
+          "accuracy": 0.7686628383921247
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.6544502617801047,
+          "specificity": 0.7758454106280194,
+          "precision": 0.35014005602240894,
+          "f1": 0.4562043795620438,
+          "accuracy": 0.7569331158238173
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.5670103092783505,
+          "specificity": 0.8439024390243902,
+          "precision": 0.4074074074074074,
+          "f1": 0.47413793103448276,
+          "accuracy": 0.7998359310910582
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.5340314136125655,
+          "specificity": 0.8280193236714976,
+          "precision": 0.36428571428571427,
+          "f1": 0.43312101910828027,
+          "accuracy": 0.7822185970636215
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "val",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.8408531583264971
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "test",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.8442088091353996
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.49866230827256725,
+          "auc_test": 0.4909932468320813,
+          "auc_test_std": 0,
+          "ap_test": 0.17231442687743714,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 10,
+          "auc_val": 0.6290822227809907,
+          "auc_test": 0.6637327060727926,
+          "auc_test_std": 0,
+          "ap_test": 0.2591254047868155,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 12,
+          "auc_val": 0.7339150113150616,
+          "auc_test": 0.7478007941927814,
+          "auc_test_std": 0,
+          "ap_test": 0.414827289649944,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": "10.0, 12.0",
+          "auc_val": 0.7658989187830022,
+          "auc_test": 0.7550935410712328,
+          "auc_test_std": 0.005156862282239775,
+          "ap_test": 0.4532125880124729,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "8.0, 10.0",
+          "auc_val": 0.7685910652920961,
+          "auc_test": 0.7651330820918801,
+          "auc_test_std": 0.008828821441045033,
+          "ap_test": 0.46703593352171735,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.5760523007291928,
+          "auc_test": 0.5596023977540026,
+          "auc_test_std": 0,
+          "ap_test": 0.17981034059179907,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.8708171988936384,
+          "auc_test": 0.8754331385790525,
+          "auc_test_std": 0,
+          "ap_test": 0.6589394796194461,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_pa_v2/metadata.json",
+        "reports/rsna_pa_v2/metrics.json",
+        "reports/rsna_pa_v2/thresholds.csv",
+        "reports/rsna_pa_v2/method_comparison.csv"
+      ]
+    },
+    {
+      "id": "rsna_pa_v3",
+      "version": "v3",
+      "scope": "pa",
+      "metadata": {
+        "version": "v3",
+        "hygiene": true,
+        "views": [
+          "PA"
+        ],
+        "image_size": 128,
+        "latent_dim": 8,
+        "epochs": 40,
+        "seed": 0,
+        "positive_class": "opacidade",
+        "sigma": 4,
+        "threshold": 0.0020795848686248064,
+        "threshold_rule": "percentil 95 dos normais da validação",
+        "vmax_map": 0.03054235130548477,
+        "auc_val": 0.7904500880060348,
+        "crop_borders": false,
+        "normalize": true,
+        "lung_mask": true
+      },
+      "metrics": {
+        "roc_auc": 0.803530869818145,
+        "average_precision": 0.5408564047686009,
+        "threshold": 0.0020795848686248064,
+        "sensitivity": 0.4607329842931937,
+        "specificity": 0.9410628019323671,
+        "precision": 0.5906040268456376,
+        "f1": 0.5176470588235295,
+        "accuracy": 0.866231647634584,
+        "confusion_matrix": {
+          "tn": 974,
+          "fp": 61,
+          "fn": 103,
+          "tp": 88
+        },
+        "accuracy_all_normal": 0.8442088091353996,
+        "roc_auc_naive": 0.7873232668133646,
+        "ranking": {
+          "prevalence": 0.15579119086460033,
+          "precision_at_10": 1,
+          "recall_at_10": 0.05235602094240838,
+          "precision_at_25": 0.92,
+          "recall_at_25": 0.12041884816753927,
+          "precision_at_50": 0.76,
+          "recall_at_50": 0.19895287958115182,
+          "precision_at_100": 0.69,
+          "recall_at_100": 0.3612565445026178
+        },
+        "other_anomalies": {
+          "roc_auc_other": 0.7389320420995997,
+          "sensitivity_other": 0.3294663573085847,
+          "n_other": 862
+        },
+        "localization": {
+          "n_exams": 191,
+          "pointing_game": 0.35602094240837695,
+          "energy_in_boxes": 0.25347718596458435,
+          "box_area_fraction": 0.07392028489037958,
+          "extent_spearman": -0.054165023349147405,
+          "box_fraction_in_mask": 0.17603814822173652
+        },
+        "views": {
+          "roc_auc_PA": 0.803530869818145
+        },
+        "equipment": {
+          "0.139": {
+            "n": 100,
+            "n_positive": 12,
+            "roc_auc": 0.8958333333333333
+          },
+          "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.8377582478258867
+          },
+          "0.168": {
+            "n": 180,
+            "n_positive": 41,
+            "roc_auc": 0.7246885418494473
+          },
+          "0.171": {
+            "n": 81,
+            "n_positive": 18,
+            "roc_auc": 0.7795414462081129
+          },
+          "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.703781512605042
+          }
+        },
+        "comparison": {
+          "Brilho médio": {
+            "auc_test": 0.5009,
+            "auc_test_std": 0
+          },
+          "Imagem média": {
+            "auc_test": 0.7044,
+            "auc_test_std": 0
+          },
+          "PCA (8 componentes)": {
+            "auc_test": 0.8076,
+            "auc_test_std": 0
+          },
+          "Autoencoder comum": {
+            "auc_test": 0.8047,
+            "auc_test_std": 0.0174
+          },
+          "VAE": {
+            "auc_test": 0.8007,
+            "auc_test_std": 0.0328
+          },
+          "Nível de detalhe*": {
+            "auc_test": 0.5807,
+            "auc_test_std": 0
+          },
+          "CNN supervisionada*": {
+            "auc_test": 0.8571,
+            "auc_test_std": 0
+          }
+        },
+        "queue_simulation": {
+          "mean_position_arrival": 50.5522,
+          "mean_position_model": 23.51415,
+          "top10_arrival": 1.01,
+          "top10_model": 4.5255
+        }
+      },
+      "n": 1226,
+      "positives": 191,
+      "thresholds": [
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.4639175257731959,
+          "specificity": 0.9492682926829268,
+          "precision": 0.6338028169014085,
+          "f1": 0.5357142857142857,
+          "accuracy": 0.8720262510254306
+        },
+        {
+          "threshold": "p95 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.4607329842931937,
+          "specificity": 0.9410628019323671,
+          "precision": 0.5906040268456376,
+          "f1": 0.5176470588235295,
+          "accuracy": 0.866231647634584
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.520618556701031,
+          "specificity": 0.8995121951219512,
+          "precision": 0.4950980392156863,
+          "f1": 0.507537688442211,
+          "accuracy": 0.8392124692370796
+        },
+        {
+          "threshold": "p90 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.5235602094240838,
+          "specificity": 0.8995169082125604,
+          "precision": 0.49019607843137253,
+          "f1": 0.5063291139240507,
+          "accuracy": 0.8409461663947798
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "val",
+          "sensitivity": 0.6288659793814433,
+          "specificity": 0.8,
+          "precision": 0.3730886850152905,
+          "f1": 0.46833013435700577,
+          "accuracy": 0.7727645611156686
+        },
+        {
+          "threshold": "p80 dos normais (sem rótulos)",
+          "split": "test",
+          "sensitivity": 0.6544502617801047,
+          "specificity": 0.8028985507246377,
+          "precision": 0.3799392097264438,
+          "f1": 0.4807692307692308,
+          "accuracy": 0.7797716150081566
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "val",
+          "sensitivity": 0.6597938144329897,
+          "specificity": 0.784390243902439,
+          "precision": 0.3667621776504298,
+          "f1": 0.4714548802946593,
+          "accuracy": 0.7645611156685808
+        },
+        {
+          "threshold": "Youden (com rótulos)",
+          "split": "test",
+          "sensitivity": 0.6649214659685864,
+          "specificity": 0.7884057971014493,
+          "precision": 0.3670520231213873,
+          "f1": 0.4729981378026071,
+          "accuracy": 0.7691680261011419
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "val",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.8408531583264971
+        },
+        {
+          "threshold": "normal para todos (referência)",
+          "split": "test",
+          "sensitivity": 0,
+          "specificity": 1,
+          "precision": 0,
+          "f1": 0,
+          "accuracy": 0.8442088091353996
+        }
+      ],
+      "methods": [
+        {
+          "method": "Brilho médio",
+          "uses_labels": false,
+          "sigma": null,
+          "auc_val": 0.5153029922051798,
+          "auc_test": 0.5008523661380478,
+          "auc_test_std": 0,
+          "ap_test": 0.17539072415323256,
+          "n_runs": 1
+        },
+        {
+          "method": "Imagem média",
+          "uses_labels": false,
+          "sigma": 0,
+          "auc_val": 0.6918229821473474,
+          "auc_test": 0.7044186458254293,
+          "auc_test_std": 0,
+          "ap_test": 0.35305851572903135,
+          "n_runs": 1
+        },
+        {
+          "method": "PCA (8 componentes)",
+          "uses_labels": false,
+          "sigma": 6,
+          "auc_val": 0.7931254714609002,
+          "auc_test": 0.8076131218858285,
+          "auc_test_std": 0,
+          "ap_test": 0.5185730999464044,
+          "n_runs": 1
+        },
+        {
+          "method": "Autoencoder comum",
+          "uses_labels": false,
+          "sigma": "4.0, 3.0",
+          "auc_val": 0.7985013829519739,
+          "auc_test": 0.8047482948461778,
+          "auc_test_std": 0.01744539613081931,
+          "ap_test": 0.5396400851628297,
+          "n_runs": 3
+        },
+        {
+          "method": "VAE",
+          "uses_labels": false,
+          "sigma": "4.0, 6.0",
+          "auc_val": 0.7965535160506244,
+          "auc_test": 0.8007351763327178,
+          "auc_test_std": 0.03279304324188796,
+          "ap_test": 0.5429394740718442,
+          "n_runs": 3
+        },
+        {
+          "method": "Nível de detalhe*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.5657731958762887,
+          "auc_test": 0.5807370311353922,
+          "auc_test_std": 0,
+          "ap_test": 0.19937203089841535,
+          "n_runs": 1
+        },
+        {
+          "method": "CNN supervisionada*",
+          "uses_labels": true,
+          "sigma": null,
+          "auc_val": 0.8633241136535076,
+          "auc_test": 0.8571110605255836,
+          "auc_test_std": 0,
+          "ap_test": 0.633729788485983,
+          "n_runs": 1
+        }
+      ],
+      "sources": [
+        "models/rsna_pa_v3/metadata.json",
+        "reports/rsna_pa_v3/metrics.json",
+        "reports/rsna_pa_v3/thresholds.csv",
+        "reports/rsna_pa_v3/method_comparison.csv"
+      ]
+    }
+  ],
+  "ablations": [
+    {
+      "run": "v2 (referência)",
+      "n_seeds": 3,
+      "val_auc": 0.7685910652920961,
+      "val_auc_std": 0.017459048994167208,
+      "delta_auc": 0,
+      "val_pointing": 0.22852233676975944,
+      "chance": 0.07500434167606314,
+      "pointing_above_chance": 0.15351799509369632,
+      "pointing_above_chance_std": 0.061496667244581735,
+      "delta_above_chance": 0,
+      "tolerance_auc": 0.017459048994167208,
+      "tolerance_above_chance": 0.061496667244581735,
+      "accepted": null
+    },
+    {
+      "run": "abl-A-recorte",
+      "n_seeds": 3,
+      "val_auc": 0.7605347414298885,
+      "val_auc_std": 0.018338487970162277,
+      "delta_auc": -0.00805632386220756,
+      "val_pointing": 0.21477663230240548,
+      "chance": 0.07500434167606314,
+      "pointing_above_chance": 0.13977229062634236,
+      "pointing_above_chance_std": 0.05290310762316374,
+      "delta_above_chance": -0.013745704467353959,
+      "tolerance_auc": 0.017459048994167208,
+      "tolerance_above_chance": 0.061496667244581735,
+      "accepted": false
+    },
+    {
+      "run": "abl-B-normalizacao",
+      "n_seeds": 3,
+      "val_auc": 0.7988182046768922,
+      "val_auc_std": 0.012236647130583637,
+      "delta_auc": 0.030227139384796153,
+      "val_pointing": 0.211340206185567,
+      "chance": 0.07500434167606314,
+      "pointing_above_chance": 0.13633586450950388,
+      "pointing_above_chance_std": 0.0627088920649301,
+      "delta_above_chance": -0.017182130584192434,
+      "tolerance_auc": 0.017459048994167208,
+      "tolerance_above_chance": 0.061496667244581735,
+      "accepted": true
+    },
+    {
+      "run": "abl-C1-mascara",
+      "n_seeds": 3,
+      "val_auc": 0.7901567345570363,
+      "val_auc_std": 0.014081172394519916,
+      "delta_auc": 0.02156566926494019,
+      "val_pointing": 0.3951890034364261,
+      "chance": 0.17748357555245872,
+      "pointing_above_chance": 0.2177054278839674,
+      "pointing_above_chance_std": 0.05677907780707321,
+      "delta_above_chance": 0.06418743279027109,
+      "tolerance_auc": 0.017459048994167208,
+      "tolerance_above_chance": 0.061496667244581735,
+      "accepted": true
+    },
+    {
+      "run": "abl-B+C1",
+      "n_seeds": 3,
+      "val_auc": 0.7965535160506244,
+      "val_auc_std": 0.026484538341203012,
+      "delta_auc": 0.027962450758528323,
+      "val_pointing": 0.40206185567010305,
+      "chance": 0.17755494150974702,
+      "pointing_above_chance": 0.22450691416035606,
+      "pointing_above_chance_std": 0.0906102877899327,
+      "delta_above_chance": 0.07098891906665974,
+      "tolerance_auc": 0.017459048994167208,
+      "tolerance_above_chance": 0.061496667244581735,
+      "accepted": true
+    }
+  ],
+  "ablationSource": "reports/rsna_pa_ablations_v2/ablations.csv"
+}

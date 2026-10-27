@@ -1,0 +1,110 @@
+{
+    "roc_auc": 0.869708673759449,
+    "average_precision": 0.8288259267129987,
+    "threshold": 0.0019025064539164305,
+    "sensitivity": 0.4850657108721625,
+    "specificity": 0.9564528899445764,
+    "precision": 0.8806941431670282,
+    "f1": 0.6255778120184899,
+    "accuracy": 0.7685714285714286,
+    "confusion_matrix": {
+        "tn": 1208,
+        "fp": 55,
+        "fn": 431,
+        "tp": 406
+    },
+    "accuracy_all_normal": 0.6014285714285714,
+    "roc_auc_naive": 0.8057724160960185,
+    "ranking": {
+        "prevalence": 0.3985714285714286,
+        "precision_at_10": 1.0,
+        "recall_at_10": 0.011947431302270013,
+        "precision_at_25": 1.0,
+        "recall_at_25": 0.02986857825567503,
+        "precision_at_50": 0.98,
+        "recall_at_50": 0.05854241338112306,
+        "precision_at_100": 0.98,
+        "recall_at_100": 0.11708482676224612
+    },
+    "other_anomalies": {
+        "roc_auc_other": 0.7706637927140971,
+        "sensitivity_other": 0.330034924330617,
+        "n_other": 1718
+    },
+    "localization": {
+        "n_exams": 837,
+        "pointing_game": 0.3870967741935484,
+        "energy_in_boxes": 0.34644123911857605,
+        "box_area_fraction": 0.1289661184149119,
+        "extent_spearman": 0.1569626352692932,
+        "box_fraction_in_mask": 0.2783547382779602
+    },
+    "views": {
+        "roc_auc_AP": 0.8247718755092064,
+        "roc_auc_PA": 0.8180084477830893,
+        "roc_auc_ap_vs_pa_normals": 0.6566276803118909
+    },
+    "equipment": {
+        "0.139": {
+            "n": 426,
+            "n_positive": 252,
+            "roc_auc": 0.8636881955847474
+        },
+        "0.143": {
+            "n": 736,
+            "n_positive": 103,
+            "roc_auc": 0.8278041074249605
+        },
+        "0.168": {
+            "n": 647,
+            "n_positive": 391,
+            "roc_auc": 0.8205322890025575
+        },
+        "0.171": {
+            "n": 162,
+            "n_positive": 74,
+            "roc_auc": 0.8897420147420149
+        },
+        "0.194": {
+            "n": 129,
+            "n_positive": 17,
+            "roc_auc": 0.8140756302521008
+        }
+    },
+    "comparison": {
+        "Brilho médio": {
+            "auc_test": 0.5339,
+            "auc_test_std": 0.0
+        },
+        "Imagem média": {
+            "auc_test": 0.6564,
+            "auc_test_std": 0.0
+        },
+        "PCA (8 componentes)": {
+            "auc_test": 0.8273,
+            "auc_test_std": 0.0
+        },
+        "Autoencoder comum": {
+            "auc_test": 0.8644,
+            "auc_test_std": 0.0016
+        },
+        "VAE": {
+            "auc_test": 0.873,
+            "auc_test_std": 0.005
+        },
+        "Nível de detalhe*": {
+            "auc_test": 0.7084,
+            "auc_test_std": 0.0
+        },
+        "CNN supervisionada*": {
+            "auc_test": 0.9546,
+            "auc_test_std": 0.0
+        }
+    },
+    "queue_simulation": {
+        "mean_position_arrival": 50.5522,
+        "mean_position_model": 17.1068,
+        "top10_arrival": 1.01,
+        "top10_model": 5.23
+    }
+}
