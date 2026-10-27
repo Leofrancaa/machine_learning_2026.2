@@ -31,50 +31,72 @@ reconhecida, o acesso é **liberado (verde)**; caso contrário, é **negado (ver
 | loguru, tqdm | Logs e barra de progresso do cadastro |
 | uv, ruff, pytest | Ambiente e dependências, lint e testes |
 
-## Ambiente
+## Como executar
 
-O projeto usa o [uv](https://docs.astral.sh/uv/) para gerenciar o Python (3.12) e as
-dependências. Na pasta `reconhecimento_facial/`, execute:
+### 1. Pré-requisitos
+
+- [uv](https://docs.astral.sh/uv/) instalado (ele baixa o Python 3.12 sozinho, se precisar):
+
+  ```bash
+  pip install uv
+  ```
+
+- Conexão com a internet na primeira execução: o DeepFace baixa os pesos do Facenet512 e
+  do detector YuNet (ficam em cache em `~/.deepface/`), e a página da portaria carrega o
+  Three.js pelo jsDelivr.
+- Webcam, só para o modo do passo 5. Sem webcam, use a portaria virtual (passo 6).
+
+### 2. Instalar o ambiente
+
+A partir da raiz do repositório:
 
 ```bash
+cd reconhecimento_facial
 uv sync
-uv run pytest
-uv run ruff check
 ```
 
-## Como usar
+O `uv sync` cria a `.venv` com o Python 3.12 e instala as versões travadas no `uv.lock`.
 
-1. Coloque as fotos das pessoas autorizadas em `data/raw/authorized/`, uma
-   subpasta por pessoa. O nome da subpasta é o nome exibido no acesso:
+### 3. Adicionar as fotos das pessoas autorizadas
 
-    ```
-    data/raw/authorized/
-    ├── maria/
-    │   ├── 1.jpg
-    │   └── 2.jpg
-    └── joao/
-        └── 1.png
-    ```
+Crie `data/raw/authorized/` (a pasta `data/` é ignorada pelo Git) com uma subpasta por
+pessoa. O nome da subpasta é o nome exibido no acesso:
 
-    Use fotos de frente, bem iluminadas e só com a pessoa. De 3 a 5 fotos por
-    pessoa deixam o reconhecimento mais estável. Formatos aceitos: JPG, PNG, BMP
-    e WEBP (fotos HEIC do iPhone precisam ser convertidas).
+```
+data/raw/authorized/
+├── maria/
+│   ├── 1.jpg
+│   └── 2.jpg
+└── joao/
+    └── 1.png
+```
 
-2. Gere o banco de rostos autorizados (rode de novo sempre que mudar as fotos):
+Use fotos de frente, bem iluminadas e só com a pessoa. De 3 a 5 fotos por pessoa deixam
+o reconhecimento mais estável. Formatos aceitos: JPG, PNG, BMP e WEBP (fotos HEIC do
+iPhone precisam ser convertidas).
 
-    ```bash
-    uv run python -m module_reconhecimento.main
-    ```
+Se for usar só a portaria virtual, este passo e o próximo são opcionais: o cadastro
+também pode ser feito pelo navegador.
 
-3. Teste o acesso pela webcam (`Q` ou `Esc` fecha a janela):
+### 4. Gerar o banco de rostos
 
-    ```bash
-    uv run python -m module_reconhecimento.inference
-    ```
+```bash
+uv run python -m module_reconhecimento.main
+```
 
-### Sem webcam: portaria virtual
+Gera `models/face_database.pkl` e `models/metadata.json`. Rode de novo sempre que
+mudar as fotos.
 
-A portaria virtual faz o cadastro e o teste de acesso pelo navegador, com fotos:
+### 5. Testar o acesso pela webcam
+
+```bash
+uv run python -m module_reconhecimento.inference
+```
+
+Abre a câmera e desenha o rosto em verde (liberado) ou vermelho (negado).
+`Q` ou `Esc` fecha a janela.
+
+### 6. Sem webcam: portaria virtual
 
 ```bash
 uv run python -m module_reconhecimento.portaria
@@ -88,49 +110,49 @@ O navegador abre em `http://127.0.0.1:8000` com duas abas:
   mostra a pessoa no totem; se o acesso for liberado o portão abre, senão aparece
   **ACESSO NEGADO**.
 
-A página carrega o Three.js pela internet (jsDelivr). `Ctrl+C` no terminal encerra
-o servidor.
+`Ctrl+C` no terminal encerra o servidor.
+
+### 7. Testes e lint
+
+```bash
+uv run pytest
+uv run ruff check
+```
+
+### Ajustes
 
 Modelo, detector e threshold ficam em `module_reconhecimento/config.py`. Se uma
-pessoa autorizada for negada, aumente o `THRESHOLD` e gere o banco de novo.
+pessoa autorizada for negada, aumente o `THRESHOLD` e gere o banco de novo (passo 4).
 
-## Project Organization
+## Organização do projeto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│       └── authorized <- Fotos das pessoas autorizadas, uma subpasta por pessoa.
+├── Makefile           <- Comandos de conveniência (make requirements, make lint, make test)
+├── README.md          <- Este arquivo
+├── pyproject.toml     <- Metadados do pacote module_reconhecimento, dependências e config do ruff
+├── uv.lock            <- Versões travadas das dependências (usado pelo uv sync)
+├── .python-version    <- Versão do Python usada pelo uv (3.12)
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── data               <- Ignorada pelo Git; criada localmente
+│   └── raw
+│       └── authorized <- Fotos das pessoas autorizadas, uma subpasta por pessoa
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── docs               <- Projeto mkdocs padrão
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── models             <- metadata.json e face_database.pkl (gerado no cadastro)
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         module_reconhecimento and configuration for tools like black
+├── notebooks          <- Notebooks Jupyter
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── references         <- Dicionários de dados, manuais e materiais de apoio
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── reports            <- Análises geradas
+│   └── figures        <- Gráficos e figuras gerados
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
+├── tests              <- Testes com pytest
 │
-├── setup.cfg          <- Configuration file for flake8
-│
-└── module_reconhecimento   <- Source code for use in this project.
+└── module_reconhecimento   <- Código-fonte do projeto
     │
-    ├── __init__.py             <- Makes module_reconhecimento a Python module
+    ├── __init__.py             <- Torna module_reconhecimento um módulo Python
     │
     ├── config.py               <- Caminhos e configuração do DeepFace (modelo, detector, threshold)
     │
@@ -156,4 +178,3 @@ pessoa autorizada for negada, aumente o `THRESHOLD` e gere o banco de novo.
 ```
 
 --------
-
