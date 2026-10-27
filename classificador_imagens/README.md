@@ -17,11 +17,6 @@ gato, cervo, cachorro, sapo, cavalo, navio e caminhão) com uma CNN.
 - A CNN tem data augmentation (flip e translação), blocos de convolução com batch
   normalization e dropout, e treina com early stopping e redução da learning rate.
 
-```bash
-uv run python -m module_classificador_imagens.main
-uv run python -m module_classificador_imagens.inference
-```
-
 ## Bibliotecas e tecnologias
 
 | Biblioteca | Uso no projeto |
@@ -34,67 +29,107 @@ uv run python -m module_classificador_imagens.inference
 | Jupyter | Notebook com a versão exploratória do classificador |
 | uv, ruff, pytest | Ambiente e dependências, lint e testes |
 
-## Ambiente
+## Como executar
 
-O projeto usa o [uv](https://docs.astral.sh/uv/) para gerenciar o Python (3.12) e as
-dependências. Na pasta `classificador_imagens/`, execute:
+### 1. Pré-requisitos
+
+- [uv](https://docs.astral.sh/uv/) instalado (ele baixa o Python 3.12 sozinho, se precisar):
+
+  ```bash
+  pip install uv
+  ```
+
+- Conexão com a internet na primeira execução: o CIFAR-10 (~170 MB) é baixado
+  automaticamente pelo `keras.datasets` e fica em cache em `~/.keras/datasets/`.
+
+### 2. Instalar o ambiente
+
+A partir da raiz do repositório:
 
 ```bash
+cd classificador_imagens
 uv sync
+```
+
+O `uv sync` cria a `.venv` com o Python 3.12 e instala as versões travadas no `uv.lock`.
+
+### 3. Treinar e avaliar a CNN
+
+```bash
+uv run python -m module_classificador_imagens.main
+```
+
+Baixa os dados, treina, avalia no conjunto de teste e salva `models/cnn_model.keras`,
+`models/metadata.json`, `reports/training_history.csv` e as figuras em `reports/figures/`.
+No Windows o TensorFlow roda na CPU, então o treino pode levar bastante tempo.
+
+Esse passo é opcional: o modelo treinado já está versionado em `models/`.
+
+### 4. Inferência
+
+```bash
+uv run python -m module_classificador_imagens.inference
+```
+
+Carrega `models/cnn_model.keras`, classifica 9 imagens de teste sorteadas e salva a grade
+com as previsões em `reports/figures/predictions.png`.
+
+### 5. Notebook (opcional)
+
+```bash
+uv run jupyter lab
+```
+
+Abra `notebooks/classificador_imagens.ipynb` e execute todas as células
+(*Run > Run All Cells*).
+
+### 6. Testes e lint
+
+```bash
 uv run pytest
 uv run ruff check
 ```
 
-## Project Organization
+Para usar GPU no TensorFlow, é preciso WSL2 ou Linux.
+
+## Organização do projeto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+├── Makefile           <- Comandos de conveniência (make requirements, make lint, make test)
+├── README.md          <- Este arquivo
+├── pyproject.toml     <- Metadados do pacote module_classificador_imagens, dependências e config do ruff
+├── uv.lock            <- Versões travadas das dependências (usado pelo uv sync)
+├── .python-version    <- Versão do Python usada pelo uv (3.12)
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── docs               <- Projeto mkdocs padrão
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── models             <- cnn_model.keras e metadata.json
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
+├── notebooks          <- classificador_imagens.ipynb (versão exploratória)
 │
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         module_classificador_imagens and configuration for tools like black
+├── references         <- Dicionários de dados, manuais e materiais de apoio
 │
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── reports            <- training_history.csv
+│   └── figures        <- Exemplos, curvas de treino e previsões
 │
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── tests              <- Testes com pytest
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── module_classificador_imagens   <- Source code for use in this project.
+└── module_classificador_imagens   <- Código-fonte do projeto
     │
-    ├── __init__.py             <- Makes module_classificador_imagens a Python module
+    ├── __init__.py             <- Torna module_classificador_imagens um módulo Python
+    ├── config.py               <- Caminhos e configurações do projeto
+    ├── dataset.py              <- Download e normalização do CIFAR-10
+    ├── features.py             <- Preparação das imagens para a CNN
+    ├── main.py                 <- Pipeline completo: dados, treino e avaliação
+    ├── inference.py            <- Classifica imagens de teste com o modelo salvo
+    ├── plots.py                <- Figuras de exemplos, curvas e previsões
     │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+    └── modeling
+        ├── __init__.py
+        ├── pipeline.py         <- Arquitetura da CNN
+        ├── train.py            <- Treino com callbacks
+        ├── evaluate.py         <- Avaliação no conjunto de teste
+        └── predict.py          <- Previsões com o modelo treinado
 ```
 
 --------
-
